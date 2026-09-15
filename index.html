@@ -164,7 +164,19 @@
 
       <div id="historySummary" class="hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p id="historySummaryText" class="text-sm text-slate-600"></p>
-        <button id="btnClearHistory" class="text-xs font-semibold text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0">Limpar historico</button>
+        <button id="btnClearHistory" class="text-xs font-semibold text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0">Limpar historico e progresso</button>
+      </div>
+
+      <div id="coverageSummary" class="hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <p class="text-sm font-bold text-slate-800">Cobertura do Banco de Questoes</p>
+          <span id="coverageOverallPct" class="text-xs font-bold text-indigoBrand-600 flex-shrink-0">0/0 (0%)</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-3">
+          <div id="coverageOverallBar" class="h-full bg-indigoBrand-500 rounded-full transition-all" style="width:0%"></div>
+        </div>
+        <div id="coverageByCategory" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"></div>
+        <p class="text-xs text-slate-400 mt-3">Questoes ja vistas neste navegador nao se repetem enquanto houver outras do mesmo assunto ainda nao respondidas (nao vale para simulados com codigo de sessao).</p>
       </div>
 
       <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-12 text-white shadow-xl relative overflow-hidden">
@@ -3798,6 +3810,7 @@
     const STORAGE_KEY_PROGRESS = 'simuladoSaudeMental_progress_v1';
     const STORAGE_KEY_HISTORY = 'simuladoSaudeMental_history_v1';
     const STORAGE_KEY_DARKMODE = 'simuladoSaudeMental_darkMode_v1';
+    const STORAGE_KEY_SEEN = 'simuladoSaudeMental_seenQuestions_v1';
 
     function safeLocalStorageGet(key) {
       try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -3899,6 +3912,62 @@
       } else {
         chartSection.classList.add('hidden');
       }
+    }
+
+    function loadSeenQuestionIds() {
+      const raw = safeLocalStorageGet(STORAGE_KEY_SEEN);
+      if (!raw) return new Set();
+      try {
+        const arr = JSON.parse(raw);
+        return new Set(Array.isArray(arr) ? arr : []);
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function markQuestionsSeen(ids) {
+      const seen = loadSeenQuestionIds();
+      ids.forEach(id => seen.add(id));
+      safeLocalStorageSet(STORAGE_KEY_SEEN, JSON.stringify([...seen]));
+    }
+
+    function renderCoverageUI() {
+      const seenIds = loadSeenQuestionIds();
+      const box = document.getElementById('coverageSummary');
+      const totalSeen = QUESTIONS_DATABASE.filter(q => seenIds.has(q.id)).length;
+
+      if (totalSeen === 0) {
+        box.classList.add('hidden');
+        return;
+      }
+      box.classList.remove('hidden');
+
+      const total = QUESTIONS_DATABASE.length;
+      const overallPct = Math.round((totalSeen / total) * 100);
+      document.getElementById('coverageOverallPct').textContent = `${totalSeen}/${total} (${overallPct}%)`;
+      document.getElementById('coverageOverallBar').style.width = `${overallPct}%`;
+
+      const byCategoryContainer = document.getElementById('coverageByCategory');
+      byCategoryContainer.innerHTML = '';
+
+      const categories = [...new Set(QUESTIONS_DATABASE.map(q => q.category))];
+      categories.forEach(cat => {
+        const catQuestions = QUESTIONS_DATABASE.filter(q => q.category === cat);
+        const catSeen = catQuestions.filter(q => seenIds.has(q.id)).length;
+        const pct = Math.round((catSeen / catQuestions.length) * 100);
+        const label = CATEGORY_LABELS[cat] || cat;
+
+        const row = document.createElement('div');
+        row.className = 'flex items-center gap-2';
+        row.innerHTML = `
+          <span class="text-xs text-slate-600 w-28 flex-shrink-0 truncate" title="${label}">${label}</span>
+          <div class="flex-1 min-w-0 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+            <div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-500' : 'bg-indigoBrand-400'}" style="width:${pct}%"></div>
+          </div>
+          <span class="text-xs text-slate-500 w-10 text-right flex-shrink-0">${catSeen}/${catQuestions.length}</span>
+        `;
+        byCategoryContainer.appendChild(row);
+      });
     }
 
     // DOM References
@@ -4026,8 +4095,9 @@
       return arr;
     }
 
-    function pickBalancedQuestions(pool, count, random) {
+    function pickBalancedQuestions(pool, count, random, avoidRepeats) {
       const rng = random || Math.random;
+      const seenIds = avoidRepeats ? loadSeenQuestionIds() : new Set();
       const byCategory = {};
       pool.forEach(q => {
         if (!byCategory[q.category]) byCategory[q.category] = [];
@@ -4036,7 +4106,11 @@
 
       const categories = Object.keys(byCategory);
       categories.forEach(cat => {
-        byCategory[cat] = shuffleArray(byCategory[cat], rng);
+        // Prioriza questoes ainda nao vistas neste navegador; só recorre as
+        // ja vistas quando o assunto estiver esgotado (sem repetir antes disso).
+        const unseen = shuffleArray(byCategory[cat].filter(q => !seenIds.has(q.id)), rng);
+        const alreadySeen = shuffleArray(byCategory[cat].filter(q => seenIds.has(q.id)), rng);
+        byCategory[cat] = unseen.concat(alreadySeen);
       });
 
       const target = Math.min(count, pool.length);
@@ -4142,7 +4216,7 @@
       const count = Math.min(Math.max(Number.isFinite(requested) ? requested : pool.length, minCount), pool.length);
       const sessionCode = sessionCodeInput.value.trim();
       const rng = sessionCode ? createSeededRandom(sessionCode) : Math.random;
-      beginQuiz(pickBalancedQuestions(pool, count, rng));
+      beginQuiz(pickBalancedQuestions(pool, count, rng, !sessionCode));
     });
 
     function renderPalette() {
@@ -4433,6 +4507,8 @@
       clearInterval(timerInterval);
       isQuizSubmitted = true;
       clearSavedProgress();
+      markQuestionsSeen(currentQuestions.map(q => q.id));
+      renderCoverageUI();
 
       quizScreen.classList.add('hidden');
       quizMetaNav.classList.add('hidden');
@@ -4841,9 +4917,11 @@
     });
 
     document.getElementById('btnClearHistory').addEventListener('click', () => {
-      if (confirm('Tem certeza que deseja apagar todo o historico de tentativas salvo neste navegador?')) {
+      if (confirm('Tem certeza que deseja apagar o historico de tentativas e o progresso de questoes ja vistas salvos neste navegador? As questoes voltam a poder se repetir desde o inicio.')) {
         safeLocalStorageRemove(STORAGE_KEY_HISTORY);
+        safeLocalStorageRemove(STORAGE_KEY_SEEN);
         renderHistoryUI();
+        renderCoverageUI();
       }
     });
 
@@ -4935,6 +5013,7 @@
     // Inicializacao: tema salvo, link de convite (?codigo=&assuntos=&qtd=) e retomada de simulado.
     applyDarkMode(safeLocalStorageGet(STORAGE_KEY_DARKMODE) === '1');
     renderHistoryUI();
+    renderCoverageUI();
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlCode = urlParams.get('codigo');

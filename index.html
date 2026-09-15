@@ -172,6 +172,13 @@
               <option value="Sono">Foco: Transtornos do Sono-Vigilia</option>
             </select>
             <p class="text-xs text-slate-400 mt-2">Ordem sorteada aleatoriamente a cada tentativa, como numa prova.</p>
+
+            <div id="questionCountWrapper" class="mt-4">
+              <label for="questionCount" class="block text-sm font-semibold text-slate-700 mb-2">Quantidade de Questoes</label>
+              <input type="number" id="questionCount" min="20" step="1"
+                class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
+              <p class="text-xs text-slate-400 mt-2">Minimo de 20 questoes, sorteadas de forma equilibrada entre os assuntos.</p>
+            </div>
           </div>
         </div>
 
@@ -3644,6 +3651,61 @@
     const labelModeExam = document.getElementById('labelModeExam');
     const labelModeTutor = document.getElementById('labelModeTutor');
 
+    const topicFilter = document.getElementById('topicFilter');
+    const questionCountWrapper = document.getElementById('questionCountWrapper');
+    const questionCountInput = document.getElementById('questionCount');
+
+    const MIN_QUESTION_COUNT = 20;
+    const TOTAL_QUESTION_COUNT = QUESTIONS_DATABASE.length;
+    questionCountInput.max = TOTAL_QUESTION_COUNT;
+    questionCountInput.value = TOTAL_QUESTION_COUNT;
+
+    topicFilter.addEventListener('change', () => {
+      questionCountWrapper.classList.toggle('hidden', topicFilter.value !== 'all');
+    });
+
+    questionCountInput.addEventListener('change', () => {
+      const clamped = Math.min(Math.max(parseInt(questionCountInput.value, 10) || MIN_QUESTION_COUNT, MIN_QUESTION_COUNT), TOTAL_QUESTION_COUNT);
+      questionCountInput.value = clamped;
+    });
+
+    function pickBalancedQuestions(pool, count) {
+      const byCategory = {};
+      pool.forEach(q => {
+        if (!byCategory[q.category]) byCategory[q.category] = [];
+        byCategory[q.category].push(q);
+      });
+
+      let categories = Object.keys(byCategory);
+      categories.forEach(cat => {
+        byCategory[cat] = byCategory[cat].sort(() => Math.random() - 0.5);
+      });
+
+      const target = Math.min(count, pool.length);
+      const picked = {};
+      categories.forEach(cat => { picked[cat] = 0; });
+
+      let remaining = target;
+      let pending = [...categories];
+      while (remaining > 0 && pending.length > 0) {
+        pending = pending.sort(() => Math.random() - 0.5);
+        pending.forEach(cat => {
+          if (remaining > 0 && picked[cat] < byCategory[cat].length) {
+            picked[cat]++;
+            remaining--;
+          }
+        });
+        pending = pending.filter(cat => picked[cat] < byCategory[cat].length);
+      }
+
+      let selected = [];
+      categories.forEach(cat => {
+        selected = selected.concat(byCategory[cat].slice(0, picked[cat]));
+      });
+
+      return selected.sort(() => Math.random() - 0.5);
+    }
+
     labelModeExam.addEventListener('click', () => {
       labelModeExam.classList.add('border-indigoBrand-600', 'bg-indigoBrand-50/40');
       labelModeExam.classList.remove('border-slate-200', 'bg-white');
@@ -3661,14 +3723,16 @@
     });
 
     btnStartQuiz.addEventListener('click', () => {
-      const topic = document.getElementById('topicFilter').value;
+      const topic = topicFilter.value;
 
-      let filtered = [...QUESTIONS_DATABASE];
-      if (topic !== 'all') {
-        filtered = QUESTIONS_DATABASE.filter(q => q.category === topic);
+      if (topic === 'all') {
+        const requested = parseInt(questionCountInput.value, 10);
+        const count = Math.min(Math.max(Number.isFinite(requested) ? requested : TOTAL_QUESTION_COUNT, MIN_QUESTION_COUNT), TOTAL_QUESTION_COUNT);
+        currentQuestions = pickBalancedQuestions(QUESTIONS_DATABASE, count);
+      } else {
+        const filtered = QUESTIONS_DATABASE.filter(q => q.category === topic);
+        currentQuestions = filtered.sort(() => Math.random() - 0.5);
       }
-
-      currentQuestions = filtered.sort(() => Math.random() - 0.5);
 
       currentIndex = 0;
       userAnswers = {};

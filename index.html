@@ -160,24 +160,48 @@
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Foco Tematico</label>
-            <select id="topicFilter" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
-              <option value="all">Todos os 7 Assuntos (Simulado Completo)</option>
-              <option value="Introducao">Foco: Introducao a Saude Mental (entrevista, anamnese, EEM)</option>
-              <option value="Delirium">Foco: Delirium</option>
-              <option value="Esquizofrenia">Foco: Esquizofrenia</option>
-              <option value="TEA">Foco: Transtorno do Espectro Autista (TEA)</option>
-              <option value="TDAH">Foco: TDAH</option>
-              <option value="Alimentares">Foco: Transtornos Alimentares</option>
-              <option value="Sono">Foco: Transtornos do Sono-Vigilia</option>
-            </select>
-            <p class="text-xs text-slate-400 mt-2">Ordem sorteada aleatoriamente a cada tentativa, como numa prova.</p>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-sm font-semibold text-slate-700">Foco Tematico</label>
+              <button type="button" id="btnToggleAllTopics" class="text-xs font-semibold text-indigoBrand-600 hover:text-indigoBrand-700">Limpar selecao</button>
+            </div>
+            <div id="topicCheckboxes" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Introducao" checked>
+                Introducao a Saude Mental
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Delirium" checked>
+                Delirium
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Esquizofrenia" checked>
+                Esquizofrenia
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="TEA" checked>
+                Transtorno do Espectro Autista (TEA)
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="TDAH" checked>
+                TDAH
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Alimentares" checked>
+                Transtornos Alimentares
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
+                <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Sono" checked>
+                Transtornos do Sono-Vigilia
+              </label>
+            </div>
+            <p id="topicSelectionError" class="hidden text-xs text-rose-600 mt-2">Selecione pelo menos um assunto.</p>
+            <p class="text-xs text-slate-400 mt-2">Ordem sorteada aleatoriamente a cada tentativa, como numa prova. Pode escolher um ou varios assuntos juntos.</p>
 
             <div id="questionCountWrapper" class="mt-4">
               <label for="questionCount" class="block text-sm font-semibold text-slate-700 mb-2">Quantidade de Questoes</label>
               <input type="number" id="questionCount" min="20" step="1"
                 class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
-              <p class="text-xs text-slate-400 mt-2">Minimo de 20 questoes, sorteadas de forma equilibrada entre os assuntos.</p>
+              <p class="text-xs text-slate-400 mt-2">Sorteadas de forma equilibrada entre os assuntos escolhidos.</p>
             </div>
           </div>
         </div>
@@ -204,7 +228,13 @@
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col gap-4">
         <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
           <span id="labelQuestionNumber" class="text-slate-800 font-bold text-sm">Questao 1 de 1</span>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-3">
+            <button id="btnHint" class="flex items-center gap-1 text-slate-500 hover:text-amber-600 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+              Dica
+            </button>
             <button id="btnFlagQuestion" class="flex items-center gap-1 text-slate-500 hover:text-amber-600 transition-colors">
               <svg id="flagIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
@@ -236,6 +266,7 @@
 
         <div class="p-6 sm:p-8">
           <p id="questionPrompt" class="text-slate-800 text-base sm:text-lg leading-relaxed font-medium mb-6"></p>
+          <div id="hintBox" class="hidden mb-6 p-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-900 text-sm leading-relaxed"></div>
           <div id="optionsContainer" class="space-y-3"></div>
           <button id="btnCheckAnswer" class="hidden mt-4 w-full sm:w-auto px-6 py-3 rounded-xl bg-indigoBrand-600 hover:bg-indigoBrand-700 text-white font-bold text-sm shadow-md shadow-indigoBrand-600/20 transition-all">
             Verificar Resposta
@@ -3637,6 +3668,8 @@
     const badgeDifficulty = document.getElementById('badgeDifficulty');
     const questionCode = document.getElementById('questionCode');
     const questionPrompt = document.getElementById('questionPrompt');
+    const hintBox = document.getElementById('hintBox');
+    const btnHint = document.getElementById('btnHint');
     const optionsContainer = document.getElementById('optionsContainer');
     const btnCheckAnswer = document.getElementById('btnCheckAnswer');
     const immediateFeedbackBox = document.getElementById('immediateFeedbackBox');
@@ -3651,23 +3684,56 @@
     const labelModeExam = document.getElementById('labelModeExam');
     const labelModeTutor = document.getElementById('labelModeTutor');
 
-    const topicFilter = document.getElementById('topicFilter');
-    const questionCountWrapper = document.getElementById('questionCountWrapper');
+    const topicCheckboxes = Array.from(document.querySelectorAll('.topic-checkbox'));
+    const btnToggleAllTopics = document.getElementById('btnToggleAllTopics');
+    const topicSelectionError = document.getElementById('topicSelectionError');
     const questionCountInput = document.getElementById('questionCount');
 
     const MIN_QUESTION_COUNT = 20;
-    const TOTAL_QUESTION_COUNT = QUESTIONS_DATABASE.length;
-    questionCountInput.max = TOTAL_QUESTION_COUNT;
-    questionCountInput.value = TOTAL_QUESTION_COUNT;
 
-    topicFilter.addEventListener('change', () => {
-      questionCountWrapper.classList.toggle('hidden', topicFilter.value !== 'all');
+    function getSelectedCategories() {
+      return topicCheckboxes.filter(cb => cb.checked).map(cb => cb.value);
+    }
+
+    function getSelectedPoolSize() {
+      const selected = getSelectedCategories();
+      return QUESTIONS_DATABASE.filter(q => selected.includes(q.category)).length;
+    }
+
+    function updateQuestionCountBounds() {
+      const poolSize = getSelectedPoolSize();
+      const minCount = poolSize > 0 ? Math.min(MIN_QUESTION_COUNT, poolSize) : 1;
+      questionCountInput.min = minCount;
+      questionCountInput.max = poolSize || 1;
+      questionCountInput.value = poolSize || '';
+      topicSelectionError.classList.toggle('hidden', poolSize > 0);
+    }
+
+    topicCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        if (getSelectedCategories().length > 0) {
+          topicSelectionError.classList.add('hidden');
+        }
+        updateQuestionCountBounds();
+        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar selecao' : 'Selecionar todos';
+      });
+    });
+
+    btnToggleAllTopics.addEventListener('click', () => {
+      const allChecked = topicCheckboxes.every(cb => cb.checked);
+      topicCheckboxes.forEach(cb => { cb.checked = !allChecked; });
+      btnToggleAllTopics.textContent = allChecked ? 'Selecionar todos' : 'Limpar selecao';
+      updateQuestionCountBounds();
     });
 
     questionCountInput.addEventListener('change', () => {
-      const clamped = Math.min(Math.max(parseInt(questionCountInput.value, 10) || MIN_QUESTION_COUNT, MIN_QUESTION_COUNT), TOTAL_QUESTION_COUNT);
+      const poolSize = getSelectedPoolSize();
+      const minCount = parseInt(questionCountInput.min, 10) || MIN_QUESTION_COUNT;
+      const clamped = Math.min(Math.max(parseInt(questionCountInput.value, 10) || minCount, minCount), poolSize || minCount);
       questionCountInput.value = clamped;
     });
+
+    updateQuestionCountBounds();
 
     function pickBalancedQuestions(pool, count) {
       const byCategory = {};
@@ -3723,16 +3789,17 @@
     });
 
     btnStartQuiz.addEventListener('click', () => {
-      const topic = topicFilter.value;
-
-      if (topic === 'all') {
-        const requested = parseInt(questionCountInput.value, 10);
-        const count = Math.min(Math.max(Number.isFinite(requested) ? requested : TOTAL_QUESTION_COUNT, MIN_QUESTION_COUNT), TOTAL_QUESTION_COUNT);
-        currentQuestions = pickBalancedQuestions(QUESTIONS_DATABASE, count);
-      } else {
-        const filtered = QUESTIONS_DATABASE.filter(q => q.category === topic);
-        currentQuestions = filtered.sort(() => Math.random() - 0.5);
+      const selectedCategories = getSelectedCategories();
+      if (selectedCategories.length === 0) {
+        topicSelectionError.classList.remove('hidden');
+        return;
       }
+
+      const pool = QUESTIONS_DATABASE.filter(q => selectedCategories.includes(q.category));
+      const minCount = Math.min(MIN_QUESTION_COUNT, pool.length);
+      const requested = parseInt(questionCountInput.value, 10);
+      const count = Math.min(Math.max(Number.isFinite(requested) ? requested : pool.length, minCount), pool.length);
+      currentQuestions = pickBalancedQuestions(pool, count);
 
       currentIndex = 0;
       userAnswers = {};
@@ -3814,6 +3881,7 @@
       badgeDifficulty.textContent = q.difficulty;
       questionCode.textContent = q.code;
       questionPrompt.textContent = q.prompt;
+      hintBox.classList.add('hidden');
 
       if (flaggedQuestions.has(q.id)) {
         flagIcon.setAttribute('fill', 'currentColor');
@@ -3991,6 +4059,12 @@
         flaggedQuestions.add(q.id);
       }
       loadQuestion(currentIndex);
+    });
+
+    btnHint.addEventListener('click', () => {
+      const q = currentQuestions[currentIndex];
+      hintBox.textContent = `💡 ${q.clinicalPointers}`;
+      hintBox.classList.toggle('hidden');
     });
 
     btnFinishEarly.addEventListener('click', () => {

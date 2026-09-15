@@ -55,6 +55,34 @@
     .custom-scroll::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
     }
+
+    /* Modo escuro: filtro aditivo, nao altera nenhuma classe existente. */
+    body.dark-mode {
+      filter: invert(1) hue-rotate(180deg);
+      background: #fff;
+    }
+    body.dark-mode img,
+    body.dark-mode video {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigoBrand-500 selection:text-white">
@@ -93,10 +121,38 @@
     </div>
   </header>
 
+  <button id="btnToggleDarkMode" class="no-print fixed bottom-4 right-4 z-50 w-11 h-11 rounded-full bg-slate-900 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 transition-colors" title="Alternar modo escuro">
+    <svg id="darkModeIconMoon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+    </svg>
+    <svg id="darkModeIconSun" class="hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+    </svg>
+  </button>
+
   <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
     <!-- Screen 1: Start Screen / Settings -->
     <div id="startScreen" class="space-y-8 py-6">
+      <div id="resumeBanner" class="hidden bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">⏳</span>
+          <div>
+            <p class="font-bold text-sm text-amber-900">Voce tem um simulado em andamento</p>
+            <p id="resumeBannerDetail" class="text-xs text-amber-700"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button id="btnResumeQuiz" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs sm:text-sm transition-all">Continuar</button>
+          <button id="btnDiscardResume" class="px-4 py-2 rounded-xl bg-white hover:bg-amber-100 text-amber-700 border border-amber-300 font-bold text-xs sm:text-sm transition-all">Descartar</button>
+        </div>
+      </div>
+
+      <div id="historySummary" class="hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <p id="historySummaryText" class="text-sm text-slate-600"></p>
+        <button id="btnClearHistory" class="text-xs font-semibold text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0">Limpar historico</button>
+      </div>
+
       <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-12 text-white shadow-xl relative overflow-hidden">
         <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigoBrand-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 max-w-2xl">
@@ -208,9 +264,14 @@
 
         <div class="mt-6 pt-6 border-t border-slate-100">
           <label for="sessionCode" class="block text-sm font-semibold text-slate-700 mb-2">Codigo de Sessao (opcional)</label>
-          <input type="text" id="sessionCode" maxlength="40" placeholder="Ex.: turma-vat1-sexta"
-            class="w-full sm:w-72 bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
-          <p class="text-xs text-slate-400 mt-2">Combinem o mesmo codigo, os mesmos assuntos e a mesma quantidade de questoes com quem for responder junto - assim a ordem sai identica para todas (a questao 5 sera a mesma pergunta pra todo mundo).</p>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="sessionCode" maxlength="40" placeholder="Ex.: turma-vat1-sexta"
+              class="w-full sm:w-72 bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
+            <button type="button" id="btnCopyInviteLink" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition-all whitespace-nowrap">
+              🔗 Copiar link de convite
+            </button>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Combinem o mesmo codigo, os mesmos assuntos e a mesma quantidade de questoes com quem for responder junto - assim a ordem sai identica para todas (a questao 5 sera a mesma pergunta pra todo mundo). O link de convite ja preenche tudo isso automaticamente pra quem clicar.</p>
         </div>
 
         <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -292,11 +353,12 @@
           </div>
         </div>
       </div>
+      <p class="hidden sm:block text-center text-xs text-slate-400">Atalhos: 1-4 escolhe a alternativa &bull; &larr;/&rarr; navega &bull; F marca para revisar &bull; H mostra a dica</p>
     </div>
 
     <!-- Screen 3: Results & Review -->
     <div id="resultsScreen" class="hidden space-y-8 py-4">
-      <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+      <div id="printArea" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
         <div class="text-center max-w-xl mx-auto mb-8">
           <div id="scoreBadgeIcon" class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigoBrand-100 text-indigoBrand-600 flex items-center justify-center font-black text-2xl shadow-inner"></div>
           <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Desempenho no Simulado</h2>
@@ -355,24 +417,52 @@
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-slate-100">
+        <div id="historyChartSection" class="hidden mb-8">
+          <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigoBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            Evolucao nas Ultimas Tentativas
+          </h3>
+          <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
+            <p id="historyChartSummary" class="text-xs text-slate-500 mb-3"></p>
+            <div id="historyChart" class="flex items-end gap-2 sm:gap-3 h-28 overflow-x-auto custom-scroll pb-1"></div>
+          </div>
+        </div>
+
+        <div class="no-print flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-100 flex-wrap">
           <button id="btnRestartQuiz" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-indigoBrand-600 hover:bg-indigoBrand-700 text-white font-bold text-sm shadow-md transition-all">
             Refazer Simulado
           </button>
           <button id="btnFocusRetry" class="hidden w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm shadow-md transition-all">
             Novo Simulado com Foco nas Dificuldades
           </button>
+          <button id="btnRetryWrong" class="hidden w-full sm:w-auto px-6 py-3 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm shadow-md transition-all">
+            Refazer Só as Erradas
+          </button>
+          <button id="btnRetryFlagged" class="hidden w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition-all">
+            Refazer Só as Marcadas
+          </button>
           <button id="btnReviewAllDetailed" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all">
             Revisar Gabarito Completo e Justificativas
+          </button>
+          <button id="btnPrintResult" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-600 border border-slate-300 font-bold text-sm transition-all">
+            🖨️ Baixar/Imprimir Resultado
           </button>
         </div>
       </div>
 
       <div id="reviewDetailedSection" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-        <h3 class="text-xl font-bold text-slate-900 flex items-center justify-between">
+        <h3 class="text-xl font-bold text-slate-900 flex items-center justify-between flex-wrap gap-2">
           <span>Caderno de Resolucoes Detalhadas</span>
           <span class="text-xs text-slate-500 font-normal">Todas as 4 alternativas comentadas</span>
         </h3>
+        <div id="reviewFilterBar" class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-semibold text-slate-500">Mostrar:</span>
+          <button type="button" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-indigoBrand-600 text-white" data-filter="all">Todas</button>
+          <button type="button" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="wrong">Só Erradas</button>
+          <button type="button" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="flagged">Só Marcadas</button>
+        </div>
         <div id="reviewQuestionsContainer" class="space-y-6"></div>
       </div>
     </div>
@@ -3687,6 +3777,115 @@
     let questionTimes = {};
     let lastLoadedIndex = null;
     let questionEnterTimestamp = null;
+    let reviewFilter = 'all';
+
+    // Armazenamento local (progresso em andamento, historico, preferencia de tema).
+    // Tudo fica no navegador do proprio usuario - sem servidor, sem conta.
+    const STORAGE_KEY_PROGRESS = 'simuladoSaudeMental_progress_v1';
+    const STORAGE_KEY_HISTORY = 'simuladoSaudeMental_history_v1';
+    const STORAGE_KEY_DARKMODE = 'simuladoSaudeMental_darkMode_v1';
+
+    function safeLocalStorageGet(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeLocalStorageSet(key, value) {
+      try { localStorage.setItem(key, value); } catch (e) { /* modo privado, cota cheia etc. */ }
+    }
+    function safeLocalStorageRemove(key) {
+      try { localStorage.removeItem(key); } catch (e) { /* ignora */ }
+    }
+
+    function saveProgress() {
+      if (currentQuestions.length === 0 || isQuizSubmitted) return;
+      const data = {
+        questionIds: currentQuestions.map(q => q.id),
+        currentIndex,
+        userAnswers,
+        flaggedQuestions: [...flaggedQuestions],
+        eliminatedOptions: Object.fromEntries(
+          Object.entries(eliminatedOptions).map(([k, v]) => [k, [...v]])
+        ),
+        revealedAnswers: [...revealedAnswers],
+        quizMode,
+        secondsElapsed,
+        questionTimes,
+        savedAt: Date.now()
+      };
+      safeLocalStorageSet(STORAGE_KEY_PROGRESS, JSON.stringify(data));
+    }
+
+    function clearSavedProgress() {
+      safeLocalStorageRemove(STORAGE_KEY_PROGRESS);
+    }
+
+    function loadSavedProgress() {
+      const raw = safeLocalStorageGet(STORAGE_KEY_PROGRESS);
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function loadHistory() {
+      const raw = safeLocalStorageGet(STORAGE_KEY_HISTORY);
+      if (!raw) return [];
+      try {
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveHistoryEntry(entry) {
+      const history = loadHistory();
+      history.push(entry);
+      safeLocalStorageSet(STORAGE_KEY_HISTORY, JSON.stringify(history.slice(-50)));
+    }
+
+    function renderHistoryUI() {
+      const history = loadHistory();
+
+      const summaryBox = document.getElementById('historySummary');
+      const summaryText = document.getElementById('historySummaryText');
+      if (history.length > 0) {
+        const scores = history.map(h => h.scorePct);
+        const best = Math.max(...scores);
+        const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+        summaryText.textContent = `Voce ja fez ${history.length} simulado${history.length > 1 ? 's' : ''} neste navegador. Melhor: ${best}% • Media: ${avg}%.`;
+        summaryBox.classList.remove('hidden');
+      } else {
+        summaryBox.classList.add('hidden');
+      }
+
+      const chartSection = document.getElementById('historyChartSection');
+      const chartContainer = document.getElementById('historyChart');
+      const chartSummary = document.getElementById('historyChartSummary');
+      if (history.length > 1) {
+        chartSection.classList.remove('hidden');
+        chartContainer.innerHTML = '';
+        const recent = history.slice(-10);
+        recent.forEach((entry, i) => {
+          const barColor = entry.scorePct >= 70 ? 'bg-emerald-500' : entry.scorePct >= 50 ? 'bg-indigoBrand-500' : 'bg-rose-500';
+          const isLast = i === recent.length - 1;
+          const bar = document.createElement('div');
+          bar.className = 'flex flex-col items-center flex-shrink-0 w-10';
+          bar.innerHTML = `
+            <div class="flex flex-col justify-end items-center h-20 w-full">
+              <span class="text-[10px] font-bold text-slate-600 mb-1">${entry.scorePct}%</span>
+              <div class="w-5 rounded-t ${barColor} ${isLast ? 'ring-2 ring-offset-1 ring-slate-400' : ''}" style="height: ${Math.max(entry.scorePct, 4)}%;"></div>
+            </div>
+            <span class="text-[9px] text-slate-400 mt-1">${new Date(entry.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</span>
+          `;
+          chartContainer.appendChild(bar);
+        });
+        chartSummary.textContent = `Mostrando as ultimas ${recent.length} de ${history.length} tentativas registradas neste navegador.`;
+      } else {
+        chartSection.classList.add('hidden');
+      }
+    }
 
     // DOM References
     const startScreen = document.getElementById('startScreen');
@@ -3867,17 +4066,34 @@
       quizMode = 'tutor';
     });
 
-    function beginQuiz(questions) {
+    function beginQuiz(questions, resumeState) {
       currentQuestions = questions;
-      currentIndex = 0;
-      userAnswers = {};
-      flaggedQuestions.clear();
-      eliminatedOptions = {};
-      revealedAnswers.clear();
-      questionTimes = {};
+
+      if (resumeState) {
+        currentIndex = Math.min(resumeState.currentIndex || 0, questions.length - 1);
+        userAnswers = resumeState.userAnswers || {};
+        flaggedQuestions = new Set(resumeState.flaggedQuestions || []);
+        eliminatedOptions = {};
+        Object.entries(resumeState.eliminatedOptions || {}).forEach(([k, v]) => {
+          eliminatedOptions[k] = new Set(v);
+        });
+        revealedAnswers = new Set(resumeState.revealedAnswers || []);
+        secondsElapsed = resumeState.secondsElapsed || 0;
+        questionTimes = resumeState.questionTimes || {};
+        if (resumeState.quizMode === 'tutor') { labelModeTutor.click(); } else { labelModeExam.click(); }
+      } else {
+        currentIndex = 0;
+        userAnswers = {};
+        flaggedQuestions.clear();
+        eliminatedOptions = {};
+        revealedAnswers.clear();
+        secondsElapsed = 0;
+        questionTimes = {};
+        clearSavedProgress();
+      }
+
       lastLoadedIndex = null;
       questionEnterTimestamp = null;
-      secondsElapsed = 0;
       isQuizSubmitted = false;
 
       clearInterval(timerInterval);
@@ -3886,8 +4102,10 @@
         const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
         const secs = String(secondsElapsed % 60).padStart(2, '0');
         timerDisplay.textContent = `${mins}:${secs}`;
+        saveProgress();
       }, 1000);
 
+      document.getElementById('resumeBanner').classList.add('hidden');
       startScreen.classList.add('hidden');
       resultsScreen.classList.add('hidden');
       quizScreen.classList.remove('hidden');
@@ -4098,6 +4316,7 @@
       }
 
       updatePaletteStatus();
+      saveProgress();
     }
 
     btnCheckAnswer.addEventListener('click', () => {
@@ -4199,6 +4418,7 @@
 
       clearInterval(timerInterval);
       isQuizSubmitted = true;
+      clearSavedProgress();
 
       quizScreen.classList.add('hidden');
       quizMetaNav.classList.add('hidden');
@@ -4319,6 +4539,46 @@
         delete btnFocusRetry.dataset.categories;
       }
 
+      const wrongQuestions = currentQuestions.filter(q => userAnswers[q.id] !== q.correctLetter);
+      const btnRetryWrong = document.getElementById('btnRetryWrong');
+      if (wrongQuestions.length > 0) {
+        btnRetryWrong.classList.remove('hidden');
+        btnRetryWrong.dataset.ids = JSON.stringify(wrongQuestions.map(q => q.id));
+      } else {
+        btnRetryWrong.classList.add('hidden');
+        delete btnRetryWrong.dataset.ids;
+      }
+
+      const flaggedList = currentQuestions.filter(q => flaggedQuestions.has(q.id));
+      const btnRetryFlagged = document.getElementById('btnRetryFlagged');
+      if (flaggedList.length > 0) {
+        btnRetryFlagged.classList.remove('hidden');
+        btnRetryFlagged.dataset.ids = JSON.stringify(flaggedList.map(q => q.id));
+      } else {
+        btnRetryFlagged.classList.add('hidden');
+        delete btnRetryFlagged.dataset.ids;
+      }
+
+      saveHistoryEntry({
+        date: Date.now(),
+        scorePct,
+        correctCount,
+        totalQ,
+        avgTimeSec,
+        totalTimeSec: secondsElapsed,
+        mode: quizMode
+      });
+      renderHistoryUI();
+
+      reviewFilter = 'all';
+      document.querySelectorAll('.review-filter-btn').forEach(btn => {
+        const isDefault = btn.dataset.filter === 'all';
+        btn.classList.toggle('bg-indigoBrand-600', isDefault);
+        btn.classList.toggle('text-white', isDefault);
+        btn.classList.toggle('bg-slate-100', !isDefault);
+        btn.classList.toggle('text-slate-600', !isDefault);
+      });
+
       renderDetailedReview();
     }
 
@@ -4329,7 +4589,20 @@
       const timeValues = currentQuestions.map(q => questionTimes[q.id] || 0);
       const avgTimeForReview = timeValues.length > 0 ? timeValues.reduce((a, b) => a + b, 0) / timeValues.length : 0;
 
-      currentQuestions.forEach((q, idx) => {
+      const entriesToRender = currentQuestions
+        .map((q, idx) => ({ q, idx }))
+        .filter(({ q }) => {
+          if (reviewFilter === 'wrong') return userAnswers[q.id] !== q.correctLetter;
+          if (reviewFilter === 'flagged') return flaggedQuestions.has(q.id);
+          return true;
+        });
+
+      if (entriesToRender.length === 0) {
+        container.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">Nenhuma questao encontrada para este filtro.</p>';
+        return;
+      }
+
+      entriesToRender.forEach(({ q, idx }) => {
         const chosen = userAnswers[q.id];
         const isCorrect = chosen === q.correctLetter;
         const timeSpentSec = Math.round(questionTimes[q.id] || 0);
@@ -4417,6 +4690,161 @@
       const pool = QUESTIONS_DATABASE.filter(q => categories.includes(q.category));
       beginQuiz(pickBalancedQuestions(pool, pool.length));
     });
+
+    document.getElementById('btnRetryWrong').addEventListener('click', (e) => {
+      const ids = JSON.parse(e.currentTarget.dataset.ids || '[]');
+      const questions = QUESTIONS_DATABASE.filter(q => ids.includes(q.id));
+      if (questions.length === 0) return;
+      beginQuiz(shuffleArray(questions, Math.random));
+    });
+
+    document.getElementById('btnRetryFlagged').addEventListener('click', (e) => {
+      const ids = JSON.parse(e.currentTarget.dataset.ids || '[]');
+      const questions = QUESTIONS_DATABASE.filter(q => ids.includes(q.id));
+      if (questions.length === 0) return;
+      beginQuiz(shuffleArray(questions, Math.random));
+    });
+
+    document.querySelectorAll('.review-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        reviewFilter = btn.dataset.filter;
+        document.querySelectorAll('.review-filter-btn').forEach(b => {
+          const isActive = b === btn;
+          b.classList.toggle('bg-indigoBrand-600', isActive);
+          b.classList.toggle('text-white', isActive);
+          b.classList.toggle('bg-slate-100', !isActive);
+          b.classList.toggle('text-slate-600', !isActive);
+        });
+        renderDetailedReview();
+      });
+    });
+
+    document.getElementById('btnPrintResult').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('btnClearHistory').addEventListener('click', () => {
+      if (confirm('Tem certeza que deseja apagar todo o historico de tentativas salvo neste navegador?')) {
+        safeLocalStorageRemove(STORAGE_KEY_HISTORY);
+        renderHistoryUI();
+      }
+    });
+
+    document.getElementById('btnResumeQuiz').addEventListener('click', () => {
+      const saved = loadSavedProgress();
+      if (!saved) return;
+      const questions = saved.questionIds.map(id => QUESTIONS_DATABASE.find(q => q.id === id)).filter(Boolean);
+      if (questions.length === 0) {
+        clearSavedProgress();
+        document.getElementById('resumeBanner').classList.add('hidden');
+        return;
+      }
+      beginQuiz(questions, saved);
+    });
+
+    document.getElementById('btnDiscardResume').addEventListener('click', () => {
+      clearSavedProgress();
+      document.getElementById('resumeBanner').classList.add('hidden');
+    });
+
+    function applyDarkMode(enabled) {
+      document.body.classList.toggle('dark-mode', enabled);
+      document.getElementById('darkModeIconMoon').classList.toggle('hidden', enabled);
+      document.getElementById('darkModeIconSun').classList.toggle('hidden', !enabled);
+    }
+
+    document.getElementById('btnToggleDarkMode').addEventListener('click', () => {
+      const enabled = !document.body.classList.contains('dark-mode');
+      applyDarkMode(enabled);
+      safeLocalStorageSet(STORAGE_KEY_DARKMODE, enabled ? '1' : '0');
+    });
+
+    document.getElementById('btnCopyInviteLink').addEventListener('click', async () => {
+      const code = sessionCodeInput.value.trim();
+      if (!code) {
+        alert('Digite um codigo de sessao antes de copiar o link de convite.');
+        return;
+      }
+      const categories = getSelectedCategories();
+      const url = new URL(window.location.href);
+      url.search = '';
+      url.searchParams.set('codigo', code);
+      url.searchParams.set('assuntos', categories.join(','));
+      url.searchParams.set('qtd', questionCountInput.value);
+
+      const btn = document.getElementById('btnCopyInviteLink');
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        btn.textContent = '✅ Link copiado!';
+      } catch (err) {
+        prompt('Copie o link abaixo:', url.toString());
+        btn.textContent = original;
+        return;
+      }
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    });
+
+    // Atalhos de teclado durante o simulado (nao interfere na tela inicial).
+    document.addEventListener('keydown', (e) => {
+      if (quizScreen.classList.contains('hidden')) return;
+      if (!document.getElementById('customModal').classList.contains('hidden')) return;
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      const key = e.key.toLowerCase();
+      const optionLetters = ['a', 'b', 'c', 'd'];
+      let optionIdx = -1;
+      if (['1', '2', '3', '4'].includes(key)) {
+        optionIdx = parseInt(key, 10) - 1;
+      } else if (optionLetters.includes(key)) {
+        optionIdx = optionLetters.indexOf(key);
+      }
+
+      if (optionIdx >= 0) {
+        const row = optionsContainer.children[optionIdx];
+        const selectBtn = row && row.querySelector('button');
+        if (selectBtn) selectBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        btnNextQuestion.click();
+      } else if (e.key === 'ArrowLeft') {
+        if (!btnPrevQuestion.disabled) btnPrevQuestion.click();
+      } else if (key === 'f') {
+        btnFlagQuestion.click();
+      } else if (key === 'h') {
+        btnHint.click();
+      }
+    });
+
+    // Inicializacao: tema salvo, link de convite (?codigo=&assuntos=&qtd=) e retomada de simulado.
+    applyDarkMode(safeLocalStorageGet(STORAGE_KEY_DARKMODE) === '1');
+    renderHistoryUI();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCode = urlParams.get('codigo');
+    const urlTopics = urlParams.get('assuntos');
+    const urlQty = urlParams.get('qtd');
+
+    if (urlCode) sessionCodeInput.value = urlCode;
+    if (urlTopics) {
+      const topicsList = urlTopics.split(',').map(t => t.trim()).filter(Boolean);
+      if (topicsList.length > 0) {
+        topicCheckboxes.forEach(cb => { cb.checked = topicsList.includes(cb.value); });
+        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar selecao' : 'Selecionar todos';
+      }
+    }
+    updateQuestionCountBounds();
+    if (urlQty) {
+      const qtyNum = parseInt(urlQty, 10);
+      if (Number.isFinite(qtyNum)) questionCountInput.value = qtyNum;
+    }
+
+    const savedProgress = loadSavedProgress();
+    if (savedProgress && Array.isArray(savedProgress.questionIds) && savedProgress.questionIds.length > 0) {
+      const answeredCount = Object.keys(savedProgress.userAnswers || {}).length;
+      document.getElementById('resumeBannerDetail').textContent =
+        `Questao ${(savedProgress.currentIndex || 0) + 1} de ${savedProgress.questionIds.length} • ${answeredCount} respondida(s)`;
+      document.getElementById('resumeBanner').classList.remove('hidden');
+    }
   </script>
 </body>
 </html>

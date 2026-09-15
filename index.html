@@ -67,20 +67,21 @@
     }
 
     @media print {
-      body * {
-        visibility: hidden;
+      .no-print,
+      header,
+      #startScreen,
+      #quizScreen,
+      #reviewDetailedSection {
+        display: none !important;
       }
-      #printArea, #printArea * {
-        visibility: visible;
+      body {
+        overflow: visible !important;
+        background: #fff !important;
       }
       #printArea {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-      }
-      .no-print {
-        display: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
       }
     }
   </style>

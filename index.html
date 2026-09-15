@@ -179,6 +179,17 @@
         <p class="text-xs text-slate-400 mt-3">Questoes ja vistas neste navegador nao se repetem enquanto houver outras do mesmo assunto ainda nao respondidas (nao vale para simulados com codigo de sessao).</p>
       </div>
 
+      <div id="weakHistorySummary" class="hidden bg-rose-50 border border-rose-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <p id="weakHistorySummaryText" class="text-sm text-rose-800"></p>
+        <button id="btnReviewWeakHistory" class="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs sm:text-sm transition-all flex-shrink-0">Revisar Pontos Fracos Historicos</button>
+      </div>
+
+      <div class="flex items-center justify-end gap-4 text-xs">
+        <button id="btnExportProgress" class="font-semibold text-slate-500 hover:text-indigoBrand-600 transition-colors">💾 Exportar progresso</button>
+        <label for="importProgressInput" class="font-semibold text-slate-500 hover:text-indigoBrand-600 transition-colors cursor-pointer">📤 Importar progresso</label>
+        <input type="file" id="importProgressInput" accept="application/json" class="hidden">
+      </div>
+
       <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-12 text-white shadow-xl relative overflow-hidden">
         <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigoBrand-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 max-w-2xl">
@@ -3811,6 +3822,7 @@
     const STORAGE_KEY_HISTORY = 'simuladoSaudeMental_history_v1';
     const STORAGE_KEY_DARKMODE = 'simuladoSaudeMental_darkMode_v1';
     const STORAGE_KEY_SEEN = 'simuladoSaudeMental_seenQuestions_v1';
+    const STORAGE_KEY_WRONG = 'simuladoSaudeMental_wrongQuestions_v1';
 
     function safeLocalStorageGet(key) {
       try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -3968,6 +3980,44 @@
         `;
         byCategoryContainer.appendChild(row);
       });
+    }
+
+    function loadWrongQuestionIds() {
+      const raw = safeLocalStorageGet(STORAGE_KEY_WRONG);
+      if (!raw) return new Set();
+      try {
+        const arr = JSON.parse(raw);
+        return new Set(Array.isArray(arr) ? arr : []);
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function updateWrongQuestionIds(questions, answersMap) {
+      const wrongSet = loadWrongQuestionIds();
+      questions.forEach(q => {
+        if (answersMap[q.id] === q.correctLetter) {
+          wrongSet.delete(q.id);
+        } else {
+          wrongSet.add(q.id);
+        }
+      });
+      safeLocalStorageSet(STORAGE_KEY_WRONG, JSON.stringify([...wrongSet]));
+    }
+
+    function renderWeakHistoryUI() {
+      const wrongIds = loadWrongQuestionIds();
+      const count = QUESTIONS_DATABASE.filter(q => wrongIds.has(q.id)).length;
+      const box = document.getElementById('weakHistorySummary');
+
+      if (count === 0) {
+        box.classList.add('hidden');
+        return;
+      }
+      box.classList.remove('hidden');
+      const questionWord = count > 1 ? 'questoes' : 'questao';
+      document.getElementById('weakHistorySummaryText').textContent =
+        `Voce tem ${count} ${questionWord} que ja errou em tentativas anteriores e ainda nao acertou de novo depois.`;
     }
 
     // DOM References
@@ -4508,7 +4558,9 @@
       isQuizSubmitted = true;
       clearSavedProgress();
       markQuestionsSeen(currentQuestions.map(q => q.id));
+      updateWrongQuestionIds(currentQuestions, userAnswers);
       renderCoverageUI();
+      renderWeakHistoryUI();
 
       quizScreen.classList.add('hidden');
       quizMetaNav.classList.add('hidden');
@@ -4917,12 +4969,100 @@
     });
 
     document.getElementById('btnClearHistory').addEventListener('click', () => {
-      if (confirm('Tem certeza que deseja apagar o historico de tentativas e o progresso de questoes ja vistas salvos neste navegador? As questoes voltam a poder se repetir desde o inicio.')) {
+      if (confirm('Tem certeza que deseja apagar o historico de tentativas, o progresso de questoes ja vistas e os pontos fracos historicos salvos neste navegador? As questoes voltam a poder se repetir desde o inicio.')) {
         safeLocalStorageRemove(STORAGE_KEY_HISTORY);
         safeLocalStorageRemove(STORAGE_KEY_SEEN);
+        safeLocalStorageRemove(STORAGE_KEY_WRONG);
         renderHistoryUI();
         renderCoverageUI();
+        renderWeakHistoryUI();
       }
+    });
+
+    document.getElementById('btnReviewWeakHistory').addEventListener('click', () => {
+      const wrongIds = loadWrongQuestionIds();
+      const questions = QUESTIONS_DATABASE.filter(q => wrongIds.has(q.id));
+      if (questions.length === 0) return;
+      beginQuiz(shuffleArray(questions, Math.random));
+    });
+
+    document.getElementById('btnExportProgress').addEventListener('click', () => {
+      const data = {
+        app: 'simulado-saude-mental',
+        exportVersion: 1,
+        exportedAt: new Date().toISOString(),
+        history: loadHistory(),
+        seenQuestionIds: [...loadSeenQuestionIds()],
+        wrongQuestionIds: [...loadWrongQuestionIds()],
+        darkMode: safeLocalStorageGet(STORAGE_KEY_DARKMODE) || '0'
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const dateSlug = new Date().toISOString().slice(0, 10);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `simulado-saude-mental-progresso-${dateSlug}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('importProgressInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        let data;
+        try {
+          data = JSON.parse(reader.result);
+        } catch (err) {
+          alert('Nao foi possivel ler este arquivo. Verifique se e um backup exportado por este simulado.');
+          e.target.value = '';
+          return;
+        }
+        if (!data || data.app !== 'simulado-saude-mental') {
+          alert('Este arquivo nao parece ser um backup valido deste simulado.');
+          e.target.value = '';
+          return;
+        }
+
+        const merge = confirm('Deseja MESCLAR este backup com o progresso atual deste navegador (recomendado)? Clique em Cancelar para SUBSTITUIR totalmente o progresso atual pelo do arquivo.');
+
+        const importedHistory = Array.isArray(data.history) ? data.history : [];
+        const importedSeen = Array.isArray(data.seenQuestionIds) ? data.seenQuestionIds : [];
+        const importedWrong = Array.isArray(data.wrongQuestionIds) ? data.wrongQuestionIds : [];
+
+        if (merge) {
+          const mergedHistory = loadHistory().concat(importedHistory).slice(-50);
+          safeLocalStorageSet(STORAGE_KEY_HISTORY, JSON.stringify(mergedHistory));
+
+          const mergedSeen = loadSeenQuestionIds();
+          importedSeen.forEach(id => mergedSeen.add(id));
+          safeLocalStorageSet(STORAGE_KEY_SEEN, JSON.stringify([...mergedSeen]));
+
+          const mergedWrong = loadWrongQuestionIds();
+          importedWrong.forEach(id => mergedWrong.add(id));
+          safeLocalStorageSet(STORAGE_KEY_WRONG, JSON.stringify([...mergedWrong]));
+        } else {
+          safeLocalStorageSet(STORAGE_KEY_HISTORY, JSON.stringify(importedHistory));
+          safeLocalStorageSet(STORAGE_KEY_SEEN, JSON.stringify(importedSeen));
+          safeLocalStorageSet(STORAGE_KEY_WRONG, JSON.stringify(importedWrong));
+        }
+
+        if (data.darkMode) {
+          safeLocalStorageSet(STORAGE_KEY_DARKMODE, data.darkMode);
+          applyDarkMode(data.darkMode === '1');
+        }
+
+        renderHistoryUI();
+        renderCoverageUI();
+        renderWeakHistoryUI();
+        alert('Progresso importado com sucesso!');
+        e.target.value = '';
+      };
+      reader.readAsText(file);
     });
 
     document.getElementById('btnResumeQuiz').addEventListener('click', () => {
@@ -5014,6 +5154,7 @@
     applyDarkMode(safeLocalStorageGet(STORAGE_KEY_DARKMODE) === '1');
     renderHistoryUI();
     renderCoverageUI();
+    renderWeakHistoryUI();
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlCode = urlParams.get('codigo');

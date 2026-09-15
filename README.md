@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Simulado Interativo: Saude Mental - Disciplina Completa</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,8 +34,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
     body {
       font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
     }
     .custom-scroll::-webkit-scrollbar {
       width: 6px;
@@ -56,21 +60,21 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigoBrand-500 selection:text-white">
 
   <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigoBrand-600 to-sky-500 flex items-center justify-center text-white font-bold shadow-md shadow-indigoBrand-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:h-16 sm:py-0 flex flex-wrap items-center justify-between gap-y-2">
+      <div class="flex items-center space-x-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigoBrand-600 to-sky-500 flex items-center justify-center text-white font-bold shadow-md shadow-indigoBrand-500/20 flex-shrink-0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
           </svg>
         </div>
-        <div>
-          <h1 class="font-bold text-slate-900 text-lg leading-tight">Simulado: Saude Mental</h1>
-          <p class="text-xs text-slate-500 font-medium">Introducao - Delirium - Esquizofrenia - TEA - TDAH - Transt. Alimentares - Sono</p>
+        <div class="min-w-0">
+          <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight truncate">Simulado: Saude Mental</h1>
+          <p class="hidden sm:block text-xs text-slate-500 font-medium truncate">Introducao - Delirium - Esquizofrenia - TEA - TDAH - Transt. Alimentares - Sono</p>
         </div>
       </div>
 
       <!-- Live Quiz Meta -->
-      <div id="quizMetaNav" class="hidden flex items-center space-x-3 sm:space-x-6">
+      <div id="quizMetaNav" class="hidden flex items-center flex-wrap gap-2 sm:space-x-6">
         <div class="flex items-center space-x-2 bg-slate-100 py-1.5 px-3 rounded-lg border border-slate-200">
           <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -93,13 +97,13 @@
 
     <!-- Screen 1: Start Screen / Settings -->
     <div id="startScreen" class="space-y-8 py-6">
-      <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+      <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-12 text-white shadow-xl relative overflow-hidden">
         <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigoBrand-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 max-w-2xl">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigoBrand-500/30 text-indigoBrand-200 border border-indigoBrand-400/30 mb-4">
             Restrito ao conteudo das aulas de Saude Mental (UNEXMED)
           </span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
             Simulado Completo: Saude Mental
           </h2>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
@@ -124,7 +128,7 @@
       </div>
 
       <!-- Settings Card -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-sm">
         <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
           <svg class="w-5 h-5 text-indigoBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
@@ -136,7 +140,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2">Modo de Resolucao</label>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label class="flex flex-col p-3.5 border-2 rounded-xl cursor-pointer transition-all hover:border-indigoBrand-500 border-indigoBrand-600 bg-indigoBrand-50/40" id="labelModeExam">
                 <input type="radio" name="quizMode" value="exam" checked class="sr-only">
                 <span class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
@@ -172,8 +176,8 @@
         </div>
 
         <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-xs text-slate-500 flex items-center gap-2">
-            <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+          <div class="text-xs text-slate-500 flex items-start gap-2 text-left">
+            <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
             Cada assunto tem no minimo 10 questoes; os enunciados podem cruzar temas (ex.: Delirium x Esquizofrenia, TEA x TDAH, Sono x Humor).

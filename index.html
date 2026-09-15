@@ -461,7 +461,7 @@
             Revisar Gabarito Completo e Justificativas
           </button>
           <button id="btnPrintResult" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-600 border border-slate-300 font-bold text-sm transition-all">
-            🖨️ Baixar/Imprimir Resultado
+            📄 Abrir Pagina de Resultados (print/PDF)
           </button>
         </div>
       </div>
@@ -4733,8 +4733,111 @@
       });
     });
 
+    function buildResultsPageHTML() {
+      const scoreBadgeEmoji = document.getElementById('scoreBadgeIcon').textContent;
+      const summaryText = document.getElementById('scoreFeedbackSummary').textContent.trim();
+      const scorePct = document.getElementById('metricScorePercent').textContent;
+      const correctCount = document.getElementById('metricCorrectCount').textContent;
+      const wrongCount = document.getElementById('metricWrongCount').textContent;
+      const totalTime = document.getElementById('metricTotalTime').textContent;
+      const avgTime = document.getElementById('metricAvgTime').textContent;
+      const topicListHTML = document.getElementById('topicPerformanceList').innerHTML;
+      const chartHTML = document.getElementById('performanceChart').innerHTML;
+      const dateStr = new Date().toLocaleString('pt-BR', { dateStyle: 'long', timeStyle: 'short' });
+
+      return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultado do Simulado - Saude Mental</title>
+<script src="https://cdn.tailwindcss.com"><\/script>
+<script>
+  tailwind.config = { theme: { extend: { colors: {
+    indigoBrand: { 50:'#eef2ff',100:'#e0e7ff',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' },
+    night: { 900:'#0f172a', 950:'#020617' }
+  } } } };
+<\/script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #fff !important; }
+  }
+</style>
+</head>
+<body class="bg-slate-100 min-h-screen py-8 px-4">
+  <div class="max-w-2xl mx-auto">
+    <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-3xl p-6 text-center text-white mb-6">
+      <p class="text-xs text-indigoBrand-200 font-semibold uppercase tracking-wider mb-1">Simulado: Saude Mental</p>
+      <p class="text-[11px] text-slate-400">${dateStr}</p>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigoBrand-100 text-indigoBrand-600 flex items-center justify-center font-black text-2xl shadow-inner">${scoreBadgeEmoji}</div>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Desempenho no Simulado</h2>
+        <p class="text-slate-600 text-sm">${summaryText}</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-8">
+        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Aproveitamento</span>
+          <span class="text-2xl sm:text-3xl font-black text-slate-900">${scorePct}</span>
+        </div>
+        <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-100 text-center">
+          <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider block mb-1">Acertos</span>
+          <span class="text-2xl sm:text-3xl font-black text-emerald-700">${correctCount}</span>
+        </div>
+        <div class="bg-rose-50 rounded-2xl p-4 border border-rose-100 text-center">
+          <span class="text-xs font-semibold text-rose-600 uppercase tracking-wider block mb-1">Erros</span>
+          <span class="text-2xl sm:text-3xl font-black text-rose-700">${wrongCount}</span>
+        </div>
+        <div class="bg-amber-50 rounded-2xl p-4 border border-amber-100 text-center">
+          <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider block mb-1">Tempo Total</span>
+          <span class="text-2xl sm:text-3xl font-black text-amber-700">${totalTime}</span>
+        </div>
+        <div class="bg-sky-50 rounded-2xl p-4 border border-sky-100 text-center col-span-2 sm:col-span-1">
+          <span class="text-xs font-semibold text-sky-600 uppercase tracking-wider block mb-1">Media/Questao</span>
+          <span class="text-2xl sm:text-3xl font-black text-sky-700">${avgTime}</span>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-base font-bold text-slate-900 mb-4">Desempenho por Assunto</h3>
+        <div class="space-y-3">${topicListHTML}</div>
+      </div>
+
+      <div>
+        <h3 class="text-base font-bold text-slate-900 mb-4">Grafico: O Que Foi Bem Absorvido</h3>
+        <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
+          <div class="flex gap-3 sm:gap-4 overflow-x-auto pb-1">${chartHTML}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-print text-center mt-6">
+      <button onclick="window.print()" class="px-6 py-3 rounded-xl bg-indigoBrand-600 hover:bg-indigoBrand-700 text-white font-bold text-sm shadow-md">
+        🖨️ Imprimir / Salvar como PDF
+      </button>
+    </div>
+  </div>
+</body>
+</html>`;
+    }
+
     document.getElementById('btnPrintResult').addEventListener('click', () => {
-      window.print();
+      const win = window.open('', '_blank');
+      if (!win) {
+        alert('Seu navegador bloqueou a abertura da nova aba. Permita pop-ups para este site e tente novamente.');
+        return;
+      }
+      win.document.open();
+      win.document.write(buildResultsPageHTML());
+      win.document.close();
     });
 
     document.getElementById('btnClearHistory').addEventListener('click', () => {

@@ -305,7 +305,7 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-8">
           <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-center">
             <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Aproveitamento</span>
             <span id="metricScorePercent" class="text-2xl sm:text-3xl font-black text-slate-900">0%</span>
@@ -322,6 +322,10 @@
             <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider block mb-1">Tempo Total</span>
             <span id="metricTotalTime" class="text-2xl sm:text-3xl font-black text-amber-700">00:00</span>
           </div>
+          <div class="bg-sky-50 rounded-2xl p-4 border border-sky-100 text-center col-span-2 sm:col-span-1">
+            <span class="text-xs font-semibold text-sky-600 uppercase tracking-wider block mb-1">Media/Questao</span>
+            <span id="metricAvgTime" class="text-2xl sm:text-3xl font-black text-sky-700">00:00</span>
+          </div>
         </div>
 
         <div class="mb-8">
@@ -334,9 +338,29 @@
           <div id="topicPerformanceList" class="space-y-3"></div>
         </div>
 
+        <div class="mb-8">
+          <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigoBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18M6 21V9m10 12V13"/>
+            </svg>
+            Grafico: O Que Foi Bem Absorvido
+          </h3>
+          <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
+            <div id="performanceChart" class="flex gap-3 sm:gap-4 overflow-x-auto custom-scroll pb-1"></div>
+            <div class="flex items-center gap-4 mt-4 text-xs text-slate-500 flex-wrap">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>Bem absorvido (≥70%)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigoBrand-500"></span>Parcial (50-69%)</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>Precisa reforcar (&lt;50%)</span>
+            </div>
+          </div>
+        </div>
+
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-slate-100">
           <button id="btnRestartQuiz" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-indigoBrand-600 hover:bg-indigoBrand-700 text-white font-bold text-sm shadow-md transition-all">
             Refazer Simulado
+          </button>
+          <button id="btnFocusRetry" class="hidden w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm shadow-md transition-all">
+            Novo Simulado com Foco nas Dificuldades
           </button>
           <button id="btnReviewAllDetailed" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all">
             Revisar Gabarito Completo e Justificativas
@@ -3660,6 +3684,9 @@
     let timerInterval = null;
     let secondsElapsed = 0;
     let isQuizSubmitted = false;
+    let questionTimes = {};
+    let lastLoadedIndex = null;
+    let questionEnterTimestamp = null;
 
     // DOM References
     const startScreen = document.getElementById('startScreen');
@@ -3840,26 +3867,16 @@
       quizMode = 'tutor';
     });
 
-    btnStartQuiz.addEventListener('click', () => {
-      const selectedCategories = getSelectedCategories();
-      if (selectedCategories.length === 0) {
-        topicSelectionError.classList.remove('hidden');
-        return;
-      }
-
-      const pool = QUESTIONS_DATABASE.filter(q => selectedCategories.includes(q.category));
-      const minCount = Math.min(MIN_QUESTION_COUNT, pool.length);
-      const requested = parseInt(questionCountInput.value, 10);
-      const count = Math.min(Math.max(Number.isFinite(requested) ? requested : pool.length, minCount), pool.length);
-      const sessionCode = sessionCodeInput.value.trim();
-      const rng = sessionCode ? createSeededRandom(sessionCode) : Math.random;
-      currentQuestions = pickBalancedQuestions(pool, count, rng);
-
+    function beginQuiz(questions) {
+      currentQuestions = questions;
       currentIndex = 0;
       userAnswers = {};
       flaggedQuestions.clear();
       eliminatedOptions = {};
       revealedAnswers.clear();
+      questionTimes = {};
+      lastLoadedIndex = null;
+      questionEnterTimestamp = null;
       secondsElapsed = 0;
       isQuizSubmitted = false;
 
@@ -3878,6 +3895,22 @@
 
       renderPalette();
       loadQuestion(currentIndex);
+    }
+
+    btnStartQuiz.addEventListener('click', () => {
+      const selectedCategories = getSelectedCategories();
+      if (selectedCategories.length === 0) {
+        topicSelectionError.classList.remove('hidden');
+        return;
+      }
+
+      const pool = QUESTIONS_DATABASE.filter(q => selectedCategories.includes(q.category));
+      const minCount = Math.min(MIN_QUESTION_COUNT, pool.length);
+      const requested = parseInt(questionCountInput.value, 10);
+      const count = Math.min(Math.max(Number.isFinite(requested) ? requested : pool.length, minCount), pool.length);
+      const sessionCode = sessionCodeInput.value.trim();
+      const rng = sessionCode ? createSeededRandom(sessionCode) : Math.random;
+      beginQuiz(pickBalancedQuestions(pool, count, rng));
     });
 
     function renderPalette() {
@@ -3921,7 +3954,23 @@
       });
     }
 
+    function trackQuestionTimeOnLeave() {
+      if (lastLoadedIndex !== null && questionEnterTimestamp !== null) {
+        const prevQ = currentQuestions[lastLoadedIndex];
+        if (prevQ) {
+          const elapsedSec = (Date.now() - questionEnterTimestamp) / 1000;
+          questionTimes[prevQ.id] = (questionTimes[prevQ.id] || 0) + elapsedSec;
+        }
+      }
+    }
+
     function loadQuestion(idx) {
+      if (lastLoadedIndex !== idx) {
+        trackQuestionTimeOnLeave();
+        questionEnterTimestamp = Date.now();
+        lastLoadedIndex = idx;
+      }
+
       const q = currentQuestions[idx];
       const total = currentQuestions.length;
 
@@ -4145,6 +4194,9 @@
     });
 
     function finishQuiz() {
+      trackQuestionTimeOnLeave();
+      questionEnterTimestamp = null;
+
       clearInterval(timerInterval);
       isQuizSubmitted = true;
 
@@ -4180,6 +4232,11 @@
       const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
       const secs = String(secondsElapsed % 60).padStart(2, '0');
       document.getElementById('metricTotalTime').textContent = `${mins}:${secs}`;
+
+      const avgTimeSec = totalQ > 0 ? Math.round(secondsElapsed / totalQ) : 0;
+      const avgMins = String(Math.floor(avgTimeSec / 60)).padStart(2, '0');
+      const avgSecs = String(avgTimeSec % 60).padStart(2, '0');
+      document.getElementById('metricAvgTime').textContent = `${avgMins}:${avgSecs}`;
 
       const scoreBadge = document.getElementById('scoreBadgeIcon');
       const summaryText = document.getElementById('scoreFeedbackSummary');
@@ -4223,6 +4280,45 @@
         topicListContainer.appendChild(item);
       }
 
+      const chartContainer = document.getElementById('performanceChart');
+      chartContainer.innerHTML = '';
+
+      for (const [topicKey, stats] of Object.entries(topicStats)) {
+        const topicPct = Math.round((stats.correct / stats.total) * 100);
+        const barColor = topicPct >= 70 ? 'bg-emerald-500' : topicPct >= 50 ? 'bg-indigoBrand-500' : 'bg-rose-500';
+        const label = CATEGORY_LABELS[topicKey] || topicKey;
+        const shortLabel = label.length > 16 ? `${label.slice(0, 15)}…` : label;
+
+        const bar = document.createElement('div');
+        bar.className = 'flex flex-col items-center flex-shrink-0 w-16';
+        bar.innerHTML = `
+          <div class="flex flex-col justify-end items-center h-32 w-full">
+            <span class="text-xs font-bold text-slate-700 mb-1">${topicPct}%</span>
+            <div class="w-8 rounded-t-lg ${barColor}" style="height: ${Math.max(topicPct, 4)}%;"></div>
+          </div>
+          <span class="text-[10px] text-slate-500 mt-2 text-center leading-tight w-full" title="${label}">${shortLabel}</span>
+        `;
+        chartContainer.appendChild(bar);
+      }
+
+      let weakCategories = Object.entries(topicStats)
+        .filter(([, stats]) => (stats.correct / stats.total) < 0.7)
+        .map(([cat]) => cat);
+      if (weakCategories.length === 0) {
+        weakCategories = Object.entries(topicStats)
+          .filter(([, stats]) => stats.correct < stats.total)
+          .map(([cat]) => cat);
+      }
+
+      const btnFocusRetry = document.getElementById('btnFocusRetry');
+      if (weakCategories.length > 0) {
+        btnFocusRetry.classList.remove('hidden');
+        btnFocusRetry.dataset.categories = JSON.stringify(weakCategories);
+      } else {
+        btnFocusRetry.classList.add('hidden');
+        delete btnFocusRetry.dataset.categories;
+      }
+
       renderDetailedReview();
     }
 
@@ -4230,9 +4326,17 @@
       const container = document.getElementById('reviewQuestionsContainer');
       container.innerHTML = '';
 
+      const timeValues = currentQuestions.map(q => questionTimes[q.id] || 0);
+      const avgTimeForReview = timeValues.length > 0 ? timeValues.reduce((a, b) => a + b, 0) / timeValues.length : 0;
+
       currentQuestions.forEach((q, idx) => {
         const chosen = userAnswers[q.id];
         const isCorrect = chosen === q.correctLetter;
+        const timeSpentSec = Math.round(questionTimes[q.id] || 0);
+        const timeLabel = timeSpentSec > 0
+          ? `${Math.floor(timeSpentSec / 60)}:${String(timeSpentSec % 60).padStart(2, '0')}`
+          : '--:--';
+        const wasSlow = !isCorrect && avgTimeForReview > 0 && timeSpentSec > avgTimeForReview;
 
         const card = document.createElement('div');
         card.className = `p-6 rounded-2xl border-2 transition-all ${
@@ -4276,6 +4380,9 @@
             <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
               Questao ${idx + 1} - ${isCorrect ? 'Acertou' : chosen ? 'Errou' : 'Nao Respondida'}
             </span>
+            <span class="text-xs text-slate-400 font-mono flex items-center gap-1" title="Tempo gasto nesta questao">
+              ⏱️ ${timeLabel}${wasSlow ? ' <span class="text-amber-600 font-bold not-italic">• demorou mais que a media</span>' : ''}
+            </span>
             <span class="text-xs text-slate-500 font-medium">${catLabel.toUpperCase()} - ${q.subcategory}</span>
           </div>
 
@@ -4302,6 +4409,13 @@
 
     document.getElementById('btnReviewAllDetailed').addEventListener('click', () => {
       document.getElementById('reviewDetailedSection').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('btnFocusRetry').addEventListener('click', (e) => {
+      const categories = JSON.parse(e.currentTarget.dataset.categories || '[]');
+      if (categories.length === 0) return;
+      const pool = QUESTIONS_DATABASE.filter(q => categories.includes(q.category));
+      beginQuiz(pickBalancedQuestions(pool, pool.length));
     });
   </script>
 </body>

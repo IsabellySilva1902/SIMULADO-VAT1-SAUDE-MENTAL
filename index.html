@@ -230,6 +230,9 @@
         <div class="p-6 sm:p-8">
           <p id="questionPrompt" class="text-slate-800 text-base sm:text-lg leading-relaxed font-medium mb-6"></p>
           <div id="optionsContainer" class="space-y-3"></div>
+          <button id="btnCheckAnswer" class="hidden mt-4 w-full sm:w-auto px-6 py-3 rounded-xl bg-indigoBrand-600 hover:bg-indigoBrand-700 text-white font-bold text-sm shadow-md shadow-indigoBrand-600/20 transition-all">
+            Verificar Resposta
+          </button>
           <div id="immediateFeedbackBox" class="hidden mt-6 p-5 rounded-xl border"></div>
         </div>
 
@@ -3606,6 +3609,8 @@
     let currentIndex = 0;
     let userAnswers = {};
     let flaggedQuestions = new Set();
+    let eliminatedOptions = {};
+    let revealedAnswers = new Set();
     let quizMode = 'exam';
     let timerInterval = null;
     let secondsElapsed = 0;
@@ -3626,6 +3631,7 @@
     const questionCode = document.getElementById('questionCode');
     const questionPrompt = document.getElementById('questionPrompt');
     const optionsContainer = document.getElementById('optionsContainer');
+    const btnCheckAnswer = document.getElementById('btnCheckAnswer');
     const immediateFeedbackBox = document.getElementById('immediateFeedbackBox');
     const btnPrevQuestion = document.getElementById('btnPrevQuestion');
     const btnNextQuestion = document.getElementById('btnNextQuestion');
@@ -3667,6 +3673,8 @@
       currentIndex = 0;
       userAnswers = {};
       flaggedQuestions.clear();
+      eliminatedOptions = {};
+      revealedAnswers.clear();
       secondsElapsed = 0;
       isQuizSubmitted = false;
 
@@ -3768,48 +3776,101 @@
 
       optionsContainer.innerHTML = '';
       const selected = userAnswers[q.id];
+      const isRevealed = revealedAnswers.has(q.id);
+      const isLocked = isQuizSubmitted || (quizMode === 'tutor' && isRevealed);
 
       q.options.forEach(opt => {
+        const isSelected = selected === opt.letter;
+        const isEliminated = !!(eliminatedOptions[q.id] && eliminatedOptions[q.id].has(opt.letter));
+
+        const optionRow = document.createElement('div');
+        optionRow.className = 'w-full flex items-stretch gap-2';
+
         const optionBtn = document.createElement('button');
-        optionBtn.className = `w-full text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3.5 ${
-          selected === opt.letter
+        optionBtn.className = `flex-1 min-w-0 text-left p-4 rounded-xl border-2 transition-all flex items-start gap-3.5 ${
+          isSelected
             ? 'border-indigoBrand-600 bg-indigoBrand-50/50 text-slate-900 shadow-sm'
-            : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/60'
+            : isEliminated
+              ? 'border-slate-200 bg-slate-50/80'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/60'
         }`;
 
         optionBtn.innerHTML = `
           <span class="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-sm ${
-            selected === opt.letter
+            isSelected
               ? 'bg-indigoBrand-600 text-white'
               : 'bg-slate-100 text-slate-700 border border-slate-200'
           }">
             ${opt.letter}
           </span>
-          <span class="text-sm sm:text-base leading-relaxed pt-0.5">${opt.text}</span>
+          <span class="text-sm sm:text-base leading-relaxed pt-0.5 ${isEliminated ? 'line-through text-slate-400' : ''}">${opt.text}</span>
         `;
 
         optionBtn.addEventListener('click', () => {
-          if (isQuizSubmitted) return;
+          if (isLocked) return;
           userAnswers[q.id] = opt.letter;
+          if (eliminatedOptions[q.id]) {
+            eliminatedOptions[q.id].delete(opt.letter);
+          }
           loadQuestion(currentIndex);
           updatePaletteStatus();
-
-          if (quizMode === 'tutor') {
-            showTutorFeedback(q);
-          }
         });
 
-        optionsContainer.appendChild(optionBtn);
+        const eliminateBtn = document.createElement('button');
+        eliminateBtn.type = 'button';
+        eliminateBtn.title = isEliminated ? 'Desfazer risco' : 'Riscar alternativa';
+        eliminateBtn.className = `flex-shrink-0 w-11 rounded-xl border-2 flex items-center justify-center transition-all ${
+          isEliminated
+            ? 'border-rose-300 bg-rose-50 text-rose-500'
+            : 'border-slate-200 bg-white text-slate-300 hover:text-slate-500 hover:border-slate-300'
+        } ${isLocked ? 'opacity-40 cursor-not-allowed' : ''}`;
+        eliminateBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14"/>
+          </svg>
+        `;
+
+        eliminateBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isLocked) return;
+          if (!eliminatedOptions[q.id]) eliminatedOptions[q.id] = new Set();
+          if (eliminatedOptions[q.id].has(opt.letter)) {
+            eliminatedOptions[q.id].delete(opt.letter);
+          } else {
+            eliminatedOptions[q.id].add(opt.letter);
+            if (userAnswers[q.id] === opt.letter) {
+              delete userAnswers[q.id];
+            }
+          }
+          loadQuestion(currentIndex);
+          updatePaletteStatus();
+        });
+
+        optionRow.appendChild(optionBtn);
+        optionRow.appendChild(eliminateBtn);
+        optionsContainer.appendChild(optionRow);
       });
 
-      if (quizMode === 'tutor' && selected) {
+      if (quizMode === 'tutor' && isRevealed) {
         showTutorFeedback(q);
+        btnCheckAnswer.classList.add('hidden');
+      } else if (quizMode === 'tutor' && selected) {
+        immediateFeedbackBox.classList.add('hidden');
+        btnCheckAnswer.classList.remove('hidden');
       } else {
         immediateFeedbackBox.classList.add('hidden');
+        btnCheckAnswer.classList.add('hidden');
       }
 
       updatePaletteStatus();
     }
+
+    btnCheckAnswer.addEventListener('click', () => {
+      const q = currentQuestions[currentIndex];
+      if (userAnswers[q.id] === undefined) return;
+      revealedAnswers.add(q.id);
+      loadQuestion(currentIndex);
+    });
 
     function showTutorFeedback(q) {
       const selectedLetter = userAnswers[q.id];

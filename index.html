@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Simulado Interativo: Saude Mental - Disciplina Completa</title>
+  <title>Simulado Interativo: Saúde Mental - Disciplina Completa</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -56,7 +56,7 @@
       background: #94a3b8;
     }
 
-    /* Modo escuro: filtro aditivo, nao altera nenhuma classe existente. */
+    /* Modo escuro: filtro aditivo, não altera nenhuma classe existente. */
     body.dark-mode {
       filter: invert(1) hue-rotate(180deg);
       background: #fff;
@@ -110,8 +110,8 @@
           </svg>
         </div>
         <div class="min-w-0">
-          <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight truncate">Simulado: Saude Mental</h1>
-          <p class="hidden sm:block text-xs text-slate-500 font-medium truncate">Introducao - Delirium - Esquizofrenia - TEA - TDAH - Transt. Alimentares - Sono</p>
+          <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight truncate">Simulado: Saúde Mental</h1>
+          <p class="hidden sm:block text-xs text-slate-500 font-medium truncate">Introdução - Delirium - Esquizofrenia - TEA - TDAH - Transt. Alimentares - Sono</p>
         </div>
       </div>
 
@@ -125,7 +125,7 @@
         </div>
 
         <div class="hidden sm:flex items-center space-x-2 text-xs font-semibold bg-indigoBrand-50 text-indigoBrand-700 border border-indigoBrand-200 py-1.5 px-3 rounded-lg">
-          <span id="progressPill">Questao 1/1</span>
+          <span id="progressPill">Questão 1/1</span>
         </div>
 
         <button id="btnFinishEarly" class="text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-lg border border-red-200 transition-colors">
@@ -152,7 +152,7 @@
         <div class="flex items-center gap-3">
           <span class="text-2xl">⏳</span>
           <div>
-            <p class="font-bold text-sm text-amber-900">Voce tem um simulado em andamento</p>
+            <p class="font-bold text-sm text-amber-900">Você tem um simulado em andamento</p>
             <p id="resumeBannerDetail" class="text-xs text-amber-700"></p>
           </div>
         </div>
@@ -164,24 +164,24 @@
 
       <div id="historySummary" class="hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p id="historySummaryText" class="text-sm text-slate-600"></p>
-        <button id="btnClearHistory" class="text-xs font-semibold text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0">Limpar historico e progresso</button>
+        <button id="btnClearHistory" class="text-xs font-semibold text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0">Limpar histórico e progresso</button>
       </div>
 
       <div id="coverageSummary" class="hidden bg-white border border-slate-200 rounded-2xl p-4 sm:p-5">
         <div class="flex items-center justify-between gap-2 mb-2">
-          <p class="text-sm font-bold text-slate-800">Cobertura do Banco de Questoes</p>
+          <p class="text-sm font-bold text-slate-800">Cobertura do Banco de Questões</p>
           <span id="coverageOverallPct" class="text-xs font-bold text-indigoBrand-600 flex-shrink-0">0/0 (0%)</span>
         </div>
         <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-3">
           <div id="coverageOverallBar" class="h-full bg-indigoBrand-500 rounded-full transition-all" style="width:0%"></div>
         </div>
         <div id="coverageByCategory" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2"></div>
-        <p class="text-xs text-slate-400 mt-3">Questoes ja vistas neste navegador nao se repetem enquanto houver outras do mesmo assunto ainda nao respondidas (nao vale para simulados com codigo de sessao).</p>
+        <p class="text-xs text-slate-400 mt-3">Questões já vistas neste navegador não se repetem enquanto houver outras do mesmo assunto ainda não respondidas (não vale para simulados com código de sessão).</p>
       </div>
 
       <div id="weakHistorySummary" class="hidden bg-rose-50 border border-rose-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <p id="weakHistorySummaryText" class="text-sm text-rose-800"></p>
-        <button id="btnReviewWeakHistory" class="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs sm:text-sm transition-all flex-shrink-0">Revisar Pontos Fracos Historicos</button>
+        <button id="btnReviewWeakHistory" class="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs sm:text-sm transition-all flex-shrink-0">Revisar Pontos Fracos Históricos</button>
       </div>
 
       <div class="flex items-center justify-end gap-4 text-xs">
@@ -194,22 +194,22 @@
         <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigoBrand-500/15 rounded-full blur-3xl pointer-events-none"></div>
         <div class="relative z-10 max-w-2xl">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigoBrand-500/30 text-indigoBrand-200 border border-indigoBrand-400/30 mb-4">
-            Restrito ao conteudo das aulas de Saude Mental (UNEXMED)
+            Restrito ao conteúdo das aulas de Saúde Mental (UNEXMED)
           </span>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
-            Simulado Completo: Saude Mental
+            Simulado Completo: Saúde Mental
           </h2>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-            200 questoes autorais, no estilo ENAMED, cobrindo os 7 assuntos das aulas: Introducao a Saude Mental (entrevista psiquiatrica, anamnese e exame do estado mental), Delirium, Esquizofrenia, Transtorno do Espectro Autista (TEA), TDAH, Transtornos Alimentares e Transtornos do Sono-Vigilia. As questoes sao sorteadas em ordem aleatoria a cada tentativa, como em uma prova real, e os assuntos podem se cruzar nos enunciados (diagnostico diferencial entre aulas).
+            200 questões autorais, no estilo ENAMED, cobrindo os 7 assuntos das aulas: Introdução à Saúde Mental (entrevista psiquiátrica, anamnese e exame do estado mental), Delirium, Esquizofrenia, Transtorno do Espectro Autista (TEA), TDAH, Transtornos Alimentares e Transtornos do Sono-Vigília. As questões são sorteadas em ordem aleatória a cada tentativa, como em uma prova real, e os assuntos podem se cruzar nos enunciados (diagnóstico diferencial entre aulas).
           </p>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-medium text-slate-200">
             <div class="bg-white/10 rounded-xl p-3 border border-white/10 backdrop-blur-sm">
               <span class="block text-xl font-bold text-white mb-0.5">200</span>
-              Questoes no total (7 assuntos)
+              Questões no total (7 assuntos)
             </div>
             <div class="bg-white/10 rounded-xl p-3 border border-white/10 backdrop-blur-sm">
-              <span class="block text-xl font-bold text-white mb-0.5">4 Opcoes</span>
+              <span class="block text-xl font-bold text-white mb-0.5">4 Opções</span>
               Multipla Escolha (A, B, C, D)
             </div>
             <div class="bg-white/10 rounded-xl p-3 border border-white/10 backdrop-blur-sm col-span-2 sm:col-span-1">
@@ -227,19 +227,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
           </svg>
-          Modo e Selecao de Conteudo
+          Modo e Seleção de Conteúdo
         </h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Modo de Resolucao</label>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Modo de Resolução</label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label class="flex flex-col p-3.5 border-2 rounded-xl cursor-pointer transition-all hover:border-indigoBrand-500 border-indigoBrand-600 bg-indigoBrand-50/40" id="labelModeExam">
                 <input type="radio" name="quizMode" value="exam" checked class="sr-only">
                 <span class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
                   Simulado Real
                 </span>
-                <span class="text-xs text-slate-500 mt-1">Gabarito e estatisticas apresentados somente ao termino.</span>
+                <span class="text-xs text-slate-500 mt-1">Gabarito e estatísticas apresentados somente ao termino.</span>
               </label>
 
               <label class="flex flex-col p-3.5 border-2 rounded-xl cursor-pointer transition-all hover:border-indigoBrand-500 border-slate-200 bg-white" id="labelModeTutor">
@@ -247,20 +247,20 @@
                 <span class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
                   Modo Tutor
                 </span>
-                <span class="text-xs text-slate-500 mt-1">Explicacoes clinicas imediatas a cada escolha.</span>
+                <span class="text-xs text-slate-500 mt-1">Explicações clínicas imediatas a cada escolha.</span>
               </label>
             </div>
           </div>
 
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="block text-sm font-semibold text-slate-700">Foco Tematico</label>
-              <button type="button" id="btnToggleAllTopics" class="text-xs font-semibold text-indigoBrand-600 hover:text-indigoBrand-700">Limpar selecao</button>
+              <label class="block text-sm font-semibold text-slate-700">Foco Temático</label>
+              <button type="button" id="btnToggleAllTopics" class="text-xs font-semibold text-indigoBrand-600 hover:text-indigoBrand-700">Limpar seleção</button>
             </div>
             <div id="topicCheckboxes" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
                 <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Introducao" checked>
-                Introducao a Saude Mental
+                Introdução à Saúde Mental
               </label>
               <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
                 <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Delirium" checked>
@@ -284,14 +284,14 @@
               </label>
               <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 text-sm text-slate-700 cursor-pointer hover:bg-slate-50">
                 <input type="checkbox" class="topic-checkbox w-4 h-4 rounded border-slate-300 text-indigoBrand-600 focus:ring-indigoBrand-500" value="Sono" checked>
-                Transtornos do Sono-Vigilia
+                Transtornos do Sono-Vigília
               </label>
             </div>
             <p id="topicSelectionError" class="hidden text-xs text-rose-600 mt-2">Selecione pelo menos um assunto.</p>
-            <p class="text-xs text-slate-400 mt-2">Ordem sorteada aleatoriamente a cada tentativa, como numa prova. Pode escolher um ou varios assuntos juntos.</p>
+            <p class="text-xs text-slate-400 mt-2">Ordem sorteada aleatoriamente a cada tentativa, como numa prova. Pode escolher um ou vários assuntos juntos.</p>
 
             <div id="questionCountWrapper" class="mt-4">
-              <label for="questionCount" class="block text-sm font-semibold text-slate-700 mb-2">Quantidade de Questoes</label>
+              <label for="questionCount" class="block text-sm font-semibold text-slate-700 mb-2">Quantidade de Questões</label>
               <input type="number" id="questionCount" min="20" step="1"
                 class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
               <p class="text-xs text-slate-400 mt-2">Sorteadas de forma equilibrada entre os assuntos escolhidos.</p>
@@ -300,7 +300,7 @@
         </div>
 
         <div class="mt-6 pt-6 border-t border-slate-100">
-          <label for="sessionCode" class="block text-sm font-semibold text-slate-700 mb-2">Codigo de Sessao (opcional)</label>
+          <label for="sessionCode" class="block text-sm font-semibold text-slate-700 mb-2">Código de Sessão (opcional)</label>
           <div class="flex flex-col sm:flex-row gap-2">
             <input type="text" id="sessionCode" maxlength="40" placeholder="Ex.: turma-vat1-sexta"
               class="w-full sm:w-72 bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500">
@@ -308,7 +308,7 @@
               🔗 Copiar link de convite
             </button>
           </div>
-          <p class="text-xs text-slate-400 mt-2">Combinem o mesmo codigo, os mesmos assuntos e a mesma quantidade de questoes com quem for responder junto - assim a ordem sai identica para todas (a questao 5 sera a mesma pergunta pra todo mundo). O link de convite ja preenche tudo isso automaticamente pra quem clicar.</p>
+          <p class="text-xs text-slate-400 mt-2">Combinem o mesmo código, os mesmos assuntos e a mesma quantidade de questões com quem for responder junto - assim a ordem sai idêntica para todas (a questão 5 será a mesma pergunta pra todo mundo). O link de convite já preenche tudo isso automaticamente pra quem clicar.</p>
         </div>
 
         <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -316,10 +316,10 @@
             <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            Cada assunto tem no minimo 10 questoes; os enunciados podem cruzar temas (ex.: Delirium x Esquizofrenia, TEA x TDAH, Sono x Humor).
+            Cada assunto tem no mínimo 10 questões; os enunciados podem cruzar temas (ex.: Delirium x Esquizofrenia, TEA x TDAH, Sono x Humor).
           </div>
           <button id="btnStartQuiz" class="w-full sm:w-auto px-8 py-3.5 bg-indigoBrand-600 hover:bg-indigoBrand-700 active:scale-98 text-white font-bold rounded-xl shadow-lg shadow-indigoBrand-600/25 transition-all text-sm flex items-center justify-center gap-2">
-            Comecar Simulado
+            Começar Simulado
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
             </svg>
@@ -332,7 +332,7 @@
     <div id="quizScreen" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex flex-col gap-4">
         <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
-          <span id="labelQuestionNumber" class="text-slate-800 font-bold text-sm">Questao 1 de 1</span>
+          <span id="labelQuestionNumber" class="text-slate-800 font-bold text-sm">Questão 1 de 1</span>
           <div class="flex items-center gap-3">
             <button id="btnHint" class="flex items-center gap-1 text-slate-500 hover:text-amber-600 transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -363,7 +363,7 @@
               Categoria
             </span>
             <span id="badgeDifficulty" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700">
-              Intermediaria
+              Intermediária
             </span>
           </div>
           <span class="text-xs text-slate-400 font-mono">ID: <span id="questionCode">COD-01</span></span>
@@ -385,7 +385,7 @@
           </button>
           <div class="flex items-center gap-2">
             <button id="btnNextQuestion" class="px-6 py-2 text-sm font-bold text-white bg-indigoBrand-600 hover:bg-indigoBrand-700 rounded-xl shadow-md shadow-indigoBrand-600/20 transition-all">
-              Proxima &rarr;
+              Próxima &rarr;
             </button>
           </div>
         </div>
@@ -400,7 +400,7 @@
           <div id="scoreBadgeIcon" class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigoBrand-100 text-indigoBrand-600 flex items-center justify-center font-black text-2xl shadow-inner"></div>
           <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Desempenho no Simulado</h2>
           <p id="scoreFeedbackSummary" class="text-slate-600 text-sm">
-            Avaliacao comparativa segundo o conteudo das 7 aulas de Saude Mental.
+            Avaliação comparativa segundo o conteúdo das 7 aulas de Saúde Mental.
           </p>
         </div>
 
@@ -422,7 +422,7 @@
             <span id="metricTotalTime" class="text-2xl sm:text-3xl font-black text-amber-700">00:00</span>
           </div>
           <div class="bg-sky-50 rounded-2xl p-4 border border-sky-100 text-center min-w-0 col-span-2 sm:col-span-1">
-            <span class="text-xs font-semibold text-sky-600 uppercase tracking-wider break-words block mb-1">Media/Questao</span>
+            <span class="text-xs font-semibold text-sky-600 uppercase tracking-wider break-words block mb-1">Media/Questão</span>
             <span id="metricAvgTime" class="text-2xl sm:text-3xl font-black text-sky-700">00:00</span>
           </div>
         </div>
@@ -442,7 +442,7 @@
             <svg class="w-5 h-5 text-indigoBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18M6 21V9m10 12V13"/>
             </svg>
-            Grafico: O Que Foi Bem Absorvido
+            Gráfico: O Que Foi Bem Absorvido
           </h3>
           <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
             <div id="performanceChart" class="flex gap-3 sm:gap-4 overflow-x-auto custom-scroll pb-1"></div>
@@ -459,7 +459,7 @@
             <svg class="w-5 h-5 text-indigoBrand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
             </svg>
-            Evolucao nas Ultimas Tentativas
+            Evolução nas Últimas Tentativas
           </h3>
           <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
             <p id="historyChartSummary" class="text-xs text-slate-500 mb-3"></p>
@@ -484,14 +484,14 @@
             Revisar Gabarito Completo e Justificativas
           </button>
           <button id="btnPrintResult" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-600 border border-slate-300 font-bold text-sm transition-all">
-            📄 Abrir Pagina de Resultados (print/PDF)
+            📄 Abrir Página de Resultados (print/PDF)
           </button>
         </div>
       </div>
 
       <div id="reviewDetailedSection" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
         <h3 class="text-xl font-bold text-slate-900 flex items-center justify-between flex-wrap gap-2">
-          <span>Caderno de Resolucoes Detalhadas</span>
+          <span>Caderno de Resoluções Detalhadas</span>
           <span class="text-xs text-slate-500 font-normal">Todas as 4 alternativas comentadas</span>
         </h3>
         <div id="reviewFilterBar" class="flex items-center gap-2 flex-wrap">
@@ -510,7 +510,7 @@
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
       <h4 class="text-lg font-bold text-slate-900 mb-2">Encerrar Simulado?</h4>
       <p id="modalMessage" class="text-sm text-slate-600 mb-6">
-        Voce ainda possui questoes sem resposta. Deseja finalizar agora?
+        Você ainda possui questões sem resposta. Deseja finalizar agora?
       </p>
       <div class="flex items-center justify-end gap-3">
         <button id="btnModalCancel" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-all">
@@ -525,9 +525,9 @@
 
   <div id="quantityModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
-      <h4 class="text-lg font-bold text-slate-900 mb-2">Quantas questoes?</h4>
+      <h4 class="text-lg font-bold text-slate-900 mb-2">Quantas questões?</h4>
       <p id="quantityModalMessage" class="text-sm text-slate-600 mb-4"></p>
-      <label for="quantityModalInput" class="block text-xs font-semibold text-slate-500 mb-1.5">Quantidade de questoes</label>
+      <label for="quantityModalInput" class="block text-xs font-semibold text-slate-500 mb-1.5">Quantidade de questões</label>
       <input type="number" id="quantityModalInput" min="1" step="1"
         class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigoBrand-500 focus:border-indigoBrand-500 mb-6">
       <div class="flex items-center justify-end gap-3">
@@ -535,7 +535,7 @@
           Cancelar
         </button>
         <button id="btnQuantityModalConfirm" class="px-4 py-2 text-sm font-bold text-white bg-indigoBrand-600 hover:bg-indigoBrand-700 rounded-xl transition-all">
-          Comecar
+          Começar
         </button>
       </div>
     </div>
@@ -6970,8 +6970,8 @@
     let questionEnterTimestamp = null;
     let reviewFilter = 'all';
 
-    // Armazenamento local (progresso em andamento, historico, preferencia de tema).
-    // Tudo fica no navegador do proprio usuario - sem servidor, sem conta.
+    // Armazenamento local (progresso em andamento, histórico, preferência de tema).
+    // Tudo fica no navegador do próprio usuário - sem servidor, sem conta.
     const STORAGE_KEY_PROGRESS = 'simuladoSaudeMental_progress_v1';
     const STORAGE_KEY_HISTORY = 'simuladoSaudeMental_history_v1';
     const STORAGE_KEY_DARKMODE = 'simuladoSaudeMental_darkMode_v1';
@@ -7047,7 +7047,7 @@
         const scores = history.map(h => h.scorePct);
         const best = Math.max(...scores);
         const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-        summaryText.textContent = `Voce ja fez ${history.length} simulado${history.length > 1 ? 's' : ''} neste navegador. Melhor: ${best}% • Media: ${avg}%.`;
+        summaryText.textContent = `Você já fez ${history.length} simulado${history.length > 1 ? 's' : ''} neste navegador. Melhor: ${best}% • Media: ${avg}%.`;
         summaryBox.classList.remove('hidden');
       } else {
         summaryBox.classList.add('hidden');
@@ -7074,7 +7074,7 @@
           `;
           chartContainer.appendChild(bar);
         });
-        chartSummary.textContent = `Mostrando as ultimas ${recent.length} de ${history.length} tentativas registradas neste navegador.`;
+        chartSummary.textContent = `Mostrando as últimas ${recent.length} de ${history.length} tentativas registradas neste navegador.`;
       } else {
         chartSection.classList.add('hidden');
       }
@@ -7169,9 +7169,9 @@
         return;
       }
       box.classList.remove('hidden');
-      const questionWord = count > 1 ? 'questoes' : 'questao';
+      const questionWord = count > 1 ? 'questões' : 'questão';
       document.getElementById('weakHistorySummaryText').textContent =
-        `Voce tem ${count} ${questionWord} que ja errou em tentativas anteriores e ainda nao acertou de novo depois.`;
+        `Você tem ${count} ${questionWord} que já errou em tentativas anteriores e ainda não acertou de novo depois.`;
     }
 
     // DOM References
@@ -7236,14 +7236,14 @@
           topicSelectionError.classList.add('hidden');
         }
         updateQuestionCountBounds();
-        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar selecao' : 'Selecionar todos';
+        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar seleção' : 'Selecionar todos';
       });
     });
 
     btnToggleAllTopics.addEventListener('click', () => {
       const allChecked = topicCheckboxes.every(cb => cb.checked);
       topicCheckboxes.forEach(cb => { cb.checked = !allChecked; });
-      btnToggleAllTopics.textContent = allChecked ? 'Selecionar todos' : 'Limpar selecao';
+      btnToggleAllTopics.textContent = allChecked ? 'Selecionar todos' : 'Limpar seleção';
       updateQuestionCountBounds();
     });
 
@@ -7256,8 +7256,8 @@
 
     updateQuestionCountBounds();
 
-    // xmur3 + mulberry32: gera uma sequencia pseudo-aleatoria determinada
-    // por uma string (codigo de sessao), identica em qualquer navegador.
+    // xmur3 + mulberry32: gera uma sequência pseudo-aleatória determinada
+    // por uma string (código de sessão), idêntica em qualquer navegador.
     function xmur3(str) {
       let h = 1779033703 ^ str.length;
       for (let i = 0; i < str.length; i++) {
@@ -7287,9 +7287,9 @@
       return mulberry32(seedGen());
     }
 
-    // Fisher-Yates: embaralha de forma uniforme e, ao contrario de
+    // Fisher-Yates: embaralha de forma uniforme e, ao contrário de
     // array.sort(() => random() - 0.5), da o mesmo resultado em
-    // qualquer navegador para a mesma sequencia de "random".
+    // qualquer navegador para a mesma sequência de "random".
     function shuffleArray(array, random) {
       const arr = array.slice();
       for (let i = arr.length - 1; i > 0; i--) {
@@ -7310,8 +7310,8 @@
 
       const categories = Object.keys(byCategory);
       categories.forEach(cat => {
-        // Prioriza questoes ainda nao vistas neste navegador; só recorre as
-        // ja vistas quando o assunto estiver esgotado (sem repetir antes disso).
+        // Prioriza questões ainda não vistas neste navegador; só recorre as
+        // já vistas quando o assunto estiver esgotado (sem repetir antes disso).
         const unseen = shuffleArray(byCategory[cat].filter(q => !seenIds.has(q.id)), rng);
         const alreadySeen = shuffleArray(byCategory[cat].filter(q => seenIds.has(q.id)), rng);
         byCategory[cat] = unseen.concat(alreadySeen);
@@ -7484,8 +7484,8 @@
       const q = currentQuestions[idx];
       const total = currentQuestions.length;
 
-      labelQuestionNumber.textContent = `Questao ${idx + 1} de ${total}`;
-      progressPill.textContent = `Questao ${idx + 1}/${total}`;
+      labelQuestionNumber.textContent = `Questão ${idx + 1} de ${total}`;
+      progressPill.textContent = `Questão ${idx + 1}/${total}`;
       const pct = ((idx + 1) / total) * 100;
       progressBar.style.width = `${pct}%`;
 
@@ -7499,7 +7499,7 @@
       if (flaggedQuestions.has(q.id)) {
         flagIcon.setAttribute('fill', 'currentColor');
         flagIcon.classList.add('text-amber-500');
-        flagText.textContent = 'Marcada para revisao';
+        flagText.textContent = 'Marcada para revisão';
         flagText.classList.add('text-amber-600', 'font-bold');
       } else {
         flagIcon.setAttribute('fill', 'none');
@@ -7514,7 +7514,7 @@
         btnNextQuestion.classList.remove('bg-indigoBrand-600', 'hover:bg-indigoBrand-700');
         btnNextQuestion.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
       } else {
-        btnNextQuestion.innerHTML = 'Proxima &rarr;';
+        btnNextQuestion.innerHTML = 'Próxima &rarr;';
         btnNextQuestion.classList.add('bg-indigoBrand-600', 'hover:bg-indigoBrand-700');
         btnNextQuestion.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
       }
@@ -7688,7 +7688,7 @@
     function requestFinishQuiz() {
       const unanswered = currentQuestions.filter(q => userAnswers[q.id] === undefined).length;
       if (unanswered > 0) {
-        document.getElementById('modalMessage').textContent = `Voce ainda tem ${unanswered} questao(oes) sem resposta. Deseja realmente finalizar o simulado agora?`;
+        document.getElementById('modalMessage').textContent = `Você ainda tem ${unanswered} questão(oes) sem resposta. Deseja realmente finalizar o simulado agora?`;
         document.getElementById('customModal').classList.remove('hidden');
       } else {
         finishQuiz();
@@ -7760,15 +7760,15 @@
       if (scorePct >= 80) {
         scoreBadge.className = 'w-16 h-16 mx-auto mb-4 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-2xl shadow-inner';
         scoreBadge.textContent = '\ud83c\udfc6';
-        summaryText.textContent = "Excelente aproveitamento! Dominio consistente dos 7 assuntos da disciplina de Saude Mental.";
+        summaryText.textContent = "Excelente aproveitamento! Domínio consistente dos 7 assuntos da disciplina de Saúde Mental.";
       } else if (scorePct >= 60) {
         scoreBadge.className = 'w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigoBrand-100 text-indigoBrand-600 flex items-center justify-center font-black text-2xl shadow-inner';
         scoreBadge.textContent = '\ud83d\udc4d';
-        summaryText.textContent = "Bom resultado! Os conceitos essenciais estao consolidados. Revise os topicos com menor aproveitamento abaixo.";
+        summaryText.textContent = "Bom resultado! Os conceitos essenciais estão consolidados. Revise os tópicos com menor aproveitamento abaixo.";
       } else {
         scoreBadge.className = 'w-16 h-16 mx-auto mb-4 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-black text-2xl shadow-inner';
         scoreBadge.textContent = '\ud83d\udcda';
-        summaryText.textContent = "Revisao recomendada. Priorize os assuntos com menor aproveitamento na lista abaixo antes da proxima tentativa.";
+        summaryText.textContent = "Revisão recomendada. Priorize os assuntos com menor aproveitamento na lista abaixo antes da próxima tentativa.";
       }
 
       const topicListContainer = document.getElementById('topicPerformanceList');
@@ -7894,7 +7894,7 @@
         });
 
       if (entriesToRender.length === 0) {
-        container.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">Nenhuma questao encontrada para este filtro.</p>';
+        container.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">Nenhuma questão encontrada para este filtro.</p>';
         return;
       }
 
@@ -7947,9 +7947,9 @@
         card.innerHTML = `
           <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
             <span class="text-xs font-bold px-2.5 py-1 rounded-lg ${isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
-              Questao ${idx + 1} - ${isCorrect ? 'Acertou' : chosen ? 'Errou' : 'Nao Respondida'}
+              Questão ${idx + 1} - ${isCorrect ? 'Acertou' : chosen ? 'Errou' : 'Não Respondida'}
             </span>
-            <span class="text-xs text-slate-400 font-mono flex items-center gap-1" title="Tempo gasto nesta questao">
+            <span class="text-xs text-slate-400 font-mono flex items-center gap-1" title="Tempo gasto nesta questão">
               ⏱️ ${timeLabel}${wasSlow ? ' <span class="text-amber-600 font-bold not-italic">• demorou mais que a media</span>' : ''}
             </span>
             <span class="text-xs text-slate-500 font-medium">${catLabel.toUpperCase()} - ${q.subcategory}</span>
@@ -8015,7 +8015,7 @@
       const pool = QUESTIONS_DATABASE.filter(q => categories.includes(q.category));
       openQuantityModal(
         pool.length,
-        `Encontramos ${pool.length} questoes nos assuntos com menor aproveitamento. Quantas voce quer fazer agora?`,
+        `Encontramos ${pool.length} questões nos assuntos com menor aproveitamento. Quantas você quer fazer agora?`,
         (count) => pickBalancedQuestions(pool, count)
       );
     });
@@ -8026,7 +8026,7 @@
       if (questions.length === 0) return;
       openQuantityModal(
         questions.length,
-        `Voce errou ${questions.length} questoes nesta tentativa. Quantas voce quer refazer agora?`,
+        `Você errou ${questions.length} questões nesta tentativa. Quantas você quer refazer agora?`,
         (count) => shuffleArray(questions, Math.random).slice(0, count)
       );
     });
@@ -8037,7 +8037,7 @@
       if (questions.length === 0) return;
       openQuantityModal(
         questions.length,
-        `Voce marcou ${questions.length} questoes para revisar. Quantas voce quer refazer agora?`,
+        `Você marcou ${questions.length} questões para revisar. Quantas você quer refazer agora?`,
         (count) => shuffleArray(questions, Math.random).slice(0, count)
       );
     });
@@ -8073,7 +8073,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resultado do Simulado - Saude Mental</title>
+<title>Resultado do Simulado - Saúde Mental</title>
 <script src="https://cdn.tailwindcss.com"><\/script>
 <script>
   tailwind.config = { theme: { extend: { colors: {
@@ -8095,7 +8095,7 @@
 <body class="bg-slate-100 min-h-screen py-8 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="bg-gradient-to-br from-night-950 via-night-900 to-indigoBrand-900 rounded-3xl p-6 text-center text-white mb-6">
-      <p class="text-xs text-indigoBrand-200 font-semibold uppercase tracking-wider mb-1">Simulado: Saude Mental</p>
+      <p class="text-xs text-indigoBrand-200 font-semibold uppercase tracking-wider mb-1">Simulado: Saúde Mental</p>
       <p class="text-[11px] text-slate-400">${dateStr}</p>
     </div>
 
@@ -8124,7 +8124,7 @@
           <span class="text-2xl sm:text-3xl font-black text-amber-700">${totalTime}</span>
         </div>
         <div class="bg-sky-50 rounded-2xl p-4 border border-sky-100 text-center min-w-0 col-span-2 sm:col-span-3 md:col-span-1">
-          <span class="text-[10px] sm:text-xs font-semibold text-sky-600 uppercase tracking-wide leading-tight break-words block mb-1">Media/Questao</span>
+          <span class="text-[10px] sm:text-xs font-semibold text-sky-600 uppercase tracking-wide leading-tight break-words block mb-1">Media/Questão</span>
           <span class="text-2xl sm:text-3xl font-black text-sky-700">${avgTime}</span>
         </div>
       </div>
@@ -8135,7 +8135,7 @@
       </div>
 
       <div>
-        <h3 class="text-base font-bold text-slate-900 mb-4">Grafico: O Que Foi Bem Absorvido</h3>
+        <h3 class="text-base font-bold text-slate-900 mb-4">Gráfico: O Que Foi Bem Absorvido</h3>
         <div class="p-4 sm:p-6 bg-slate-50 rounded-2xl border border-slate-200">
           <div class="flex gap-3 sm:gap-4 overflow-x-auto pb-1">${chartHTML}</div>
         </div>
@@ -8164,7 +8164,7 @@
     });
 
     document.getElementById('btnClearHistory').addEventListener('click', () => {
-      if (confirm('Tem certeza que deseja apagar o historico de tentativas, o progresso de questoes ja vistas e os pontos fracos historicos salvos neste navegador? As questoes voltam a poder se repetir desde o inicio.')) {
+      if (confirm('Tem certeza que deseja apagar o histórico de tentativas, o progresso de questões já vistas e os pontos fracos históricos salvos neste navegador? As questões voltam a poder se repetir desde o inicio.')) {
         safeLocalStorageRemove(STORAGE_KEY_HISTORY);
         safeLocalStorageRemove(STORAGE_KEY_SEEN);
         safeLocalStorageRemove(STORAGE_KEY_WRONG);
@@ -8180,14 +8180,14 @@
       if (questions.length === 0) return;
       openQuantityModal(
         questions.length,
-        `Voce tem ${questions.length} questoes marcadas como ponto fraco historico. Quantas voce quer revisar agora?`,
+        `Você tem ${questions.length} questões marcadas como ponto fraco histórico. Quantas você quer revisar agora?`,
         (count) => shuffleArray(questions, Math.random).slice(0, count)
       );
     });
 
     document.getElementById('btnExportProgress').addEventListener('click', () => {
       const data = {
-        app: 'simulado-saude-mental',
+        app: 'simulado-saúde-mental',
         exportVersion: 1,
         exportedAt: new Date().toISOString(),
         history: loadHistory(),
@@ -8200,7 +8200,7 @@
       const dateSlug = new Date().toISOString().slice(0, 10);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `simulado-saude-mental-progresso-${dateSlug}.json`;
+      a.download = `simulado-saúde-mental-progresso-${dateSlug}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -8217,12 +8217,12 @@
         try {
           data = JSON.parse(reader.result);
         } catch (err) {
-          alert('Nao foi possivel ler este arquivo. Verifique se e um backup exportado por este simulado.');
+          alert('Não foi possível ler este arquivo. Verifique se e um backup exportado por este simulado.');
           e.target.value = '';
           return;
         }
-        if (!data || data.app !== 'simulado-saude-mental') {
-          alert('Este arquivo nao parece ser um backup valido deste simulado.');
+        if (!data || data.app !== 'simulado-saúde-mental') {
+          alert('Este arquivo não parece ser um backup valido deste simulado.');
           e.target.value = '';
           return;
         }
@@ -8296,7 +8296,7 @@
     document.getElementById('btnCopyInviteLink').addEventListener('click', async () => {
       const code = sessionCodeInput.value.trim();
       if (!code) {
-        alert('Digite um codigo de sessao antes de copiar o link de convite.');
+        alert('Digite um código de sessão antes de copiar o link de convite.');
         return;
       }
       const categories = getSelectedCategories();
@@ -8319,7 +8319,7 @@
       setTimeout(() => { btn.textContent = original; }, 2000);
     });
 
-    // Atalhos de teclado durante o simulado (nao interfere na tela inicial).
+    // Atalhos de teclado durante o simulado (não interfere na tela inicial).
     document.addEventListener('keydown', (e) => {
       if (quizScreen.classList.contains('hidden')) return;
       if (!document.getElementById('customModal').classList.contains('hidden')) return;
@@ -8350,7 +8350,7 @@
       }
     });
 
-    // Inicializacao: tema salvo, link de convite (?codigo=&assuntos=&qtd=) e retomada de simulado.
+    // Inicialização: tema salvo, link de convite (?código=&assuntos=&qtd=) e retomada de simulado.
     applyDarkMode(safeLocalStorageGet(STORAGE_KEY_DARKMODE) === '1');
     renderHistoryUI();
     renderCoverageUI();
@@ -8366,7 +8366,7 @@
       const topicsList = urlTopics.split(',').map(t => t.trim()).filter(Boolean);
       if (topicsList.length > 0) {
         topicCheckboxes.forEach(cb => { cb.checked = topicsList.includes(cb.value); });
-        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar selecao' : 'Selecionar todos';
+        btnToggleAllTopics.textContent = topicCheckboxes.every(c => c.checked) ? 'Limpar seleção' : 'Selecionar todos';
       }
     }
     updateQuestionCountBounds();
@@ -8379,7 +8379,7 @@
     if (savedProgress && Array.isArray(savedProgress.questionIds) && savedProgress.questionIds.length > 0) {
       const answeredCount = Object.keys(savedProgress.userAnswers || {}).length;
       document.getElementById('resumeBannerDetail').textContent =
-        `Questao ${(savedProgress.currentIndex || 0) + 1} de ${savedProgress.questionIds.length} • ${answeredCount} respondida(s)`;
+        `Questão ${(savedProgress.currentIndex || 0) + 1} de ${savedProgress.questionIds.length} • ${answeredCount} respondida(s)`;
       document.getElementById('resumeBanner').classList.remove('hidden');
     }
   </script>

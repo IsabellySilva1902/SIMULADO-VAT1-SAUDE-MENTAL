@@ -200,7 +200,7 @@
             Simulado Completo: Saúde Mental
           </h2>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-            200 questões autorais, no estilo ENAMED, cobrindo os 7 assuntos das aulas: Introdução à Saúde Mental (entrevista psiquiátrica, anamnese e exame do estado mental), Delirium, Esquizofrenia, Transtorno do Espectro Autista (TEA), TDAH, Transtornos Alimentares e Transtornos do Sono-Vigília. As questões são sorteadas em ordem aleatória a cada tentativa, como em uma prova real, e os assuntos podem se cruzar nos enunciados (diagnóstico diferencial entre aulas).
+            220 questões, no estilo ENAMED, cobrindo os 7 assuntos das aulas: Introdução à Saúde Mental (entrevista psiquiátrica, anamnese e exame do estado mental), Delirium, Esquizofrenia, Transtorno do Espectro Autista (TEA), TDAH, Transtornos Alimentares e Transtornos do Sono-Vigília. Além das questões autorais, o banco inclui 20 questões de uma prova aplicada anteriormente a outra turma sobre os mesmos assuntos, sinalizadas com a tag "🕰️ Questão de Prova Anterior". As questões são sorteadas em ordem aleatória a cada tentativa, como em uma prova real, e os assuntos podem se cruzar nos enunciados (diagnóstico diferencial entre aulas).
           </p>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-medium text-slate-200">
@@ -364,6 +364,9 @@
             </span>
             <span id="badgeDifficulty" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700">
               Intermediária
+            </span>
+            <span id="badgePreviousExam" class="hidden px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-100 text-amber-800 border border-amber-200">
+              🕰️ Questão de Prova Anterior
             </span>
           </div>
           <span class="text-xs text-slate-400 font-mono">ID: <span id="questionCode">COD-01</span></span>
@@ -6942,6 +6945,666 @@
     ],
     "correctLetter": "A",
     "clinicalPointers": "Perguntas de triagem para AOS: \"Você ronca?\" tem maior sensibilidade (capta mais casos suspeitos); \"Você deixa de respirar durante o sono?\" tem maior especificidade (mais específica, geralmente relatada pelo parceiro de cama que testemunha as pausas)."
+  },
+  {
+    "id": 202,
+    "code": "TA-31",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - Anorexia nervosa: subtipo restritivo",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Uma jovem de 19 anos, estudante de nutrição, procura atendimento após a mãe notar perda ponderal significativa nos últimos meses. Refere medo intenso de engordar, mesmo estando abaixo do peso esperado, e afirma que \"as coxas ainda estão muito grossas\". Mastiga os alimentos muito lentamente e evita refeições em grupo, mas nega uso de laxantes, vômitos ou episódios de compulsão. Assinale a alternativa que explica o quadro desse paciente:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro é compatível com anorexia nervosa, subtipo purgativo, dado o comprometimento psíquico grave.",
+        "rationale": "Incorreta. Não há relato de vômitos autoinduzidos, uso de laxantes/diuréticos ou episódios de compulsão alimentar; a ausência de qualquer comportamento purgativo ou compensatório afasta o subtipo compulsão/purgação, sendo compatível com o subtipo restritivo."
+      },
+      {
+        "letter": "B",
+        "text": "A ausência de perda de apetite descarta o diagnóstico de anorexia nervosa.",
+        "rationale": "Incorreta. É justamente o contrário: pacientes com anorexia nervosa tipicamente preservam a fome e restringem apesar dela (a denominação \"anorexia\", que sugere perda de apetite, é considerada imprecisa); relato de perda real do apetite é que fala CONTRA o diagnóstico, não sua ausência."
+      },
+      {
+        "letter": "C",
+        "text": "O quadro é compatível com anorexia nervosa, subtipo restritivo, pois há restrição alimentar sem comportamentos bulímicos.",
+        "rationale": "CORRETA. A paciente apresenta os elementos centrais da anorexia nervosa (restrição alimentar levando a baixo peso, medo intenso de ganhar peso, perturbação na vivência do peso/forma corporal), sem qualquer comportamento purgativo ou de compulsão alimentar associado, caracterizando o subtipo restritivo."
+      },
+      {
+        "letter": "D",
+        "text": "O diagnóstico exige a presença de alterações hormonais decorrentes da desnutrição, como critério obrigatório.",
+        "rationale": "Incorreta. A amenorreia e demais alterações hormonais decorrentes da desnutrição, embora frequentes, não são mais critério diagnóstico obrigatório para anorexia nervosa no DSM-5-TR."
+      }
+    ],
+    "correctLetter": "C",
+    "clinicalPointers": "Anorexia nervosa, subtipo restritivo: restrição alimentar levando a baixo peso, sem episódios de compulsão ou comportamentos purgativos. A fome costuma estar preservada (a paciente restringe apesar dela); alterações hormonais não são mais critério obrigatório."
+  },
+  {
+    "id": 203,
+    "code": "TA-32",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - Fatores prognósticos da anorexia nervosa",
+    "difficulty": "Avançada",
+    "previousExam": true,
+    "prompt": "Sobre os fatores associados à evolução da anorexia nervosa, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Peso muito baixo, aparecimento tardio do transtorno, comorbidade psiquiátrica, uso de métodos purgativos e relações familiares comprometidas são fatores preditivos de má evolução.",
+        "rationale": "CORRETA. Esses cinco elementos (peso muito baixo, início tardio/maior cronicidade até o tratamento, comorbidade psiquiátrica associada, presença de comportamentos purgativos e relações familiares comprometidas) são reconhecidos como fatores associados a pior evolução da anorexia nervosa."
+      },
+      {
+        "letter": "B",
+        "text": "O subtipo purgativo está associado a menores taxas de comorbidade psiquiátrica e de suicídio quando comparado ao restritivo.",
+        "rationale": "Incorreta. É o oposto: o subtipo compulsão/purgação está associado a MAIORES taxas de comorbidade psiquiátrica (como TOC e impulsividade) e de comportamento suicida, quando comparado ao subtipo restritivo."
+      },
+      {
+        "letter": "C",
+        "text": "A recuperação completa ocorre em praticamente a totalidade dos casos tratados.",
+        "rationale": "Incorreta. A anorexia nervosa é o transtorno psiquiátrico com maior taxa de mortalidade e apresenta um subgrupo relevante de evolução desfavorável e cronicidade; a recuperação completa não ocorre na totalidade dos casos tratados."
+      },
+      {
+        "letter": "D",
+        "text": "A mortalidade da anorexia nervosa é semelhante à da população geral.",
+        "rationale": "Incorreta. A mortalidade da anorexia nervosa é significativamente maior do que a da população geral, chegando a 5-18% no subgrupo de evolução desfavorável, a maior entre os transtornos psiquiátricos."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Fatores de pior prognóstico na AN: peso muito baixo, início mais tardio/maior cronicidade, comorbidade psiquiátrica, comportamentos purgativos e relações familiares comprometidas. O subtipo purgativo tem maior (não menor) comorbidade e risco de suicídio do que o restritivo."
+  },
+  {
+    "id": 204,
+    "code": "TA-33",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - Bulimia nervosa: diagnóstico",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Mulher de 24 anos relata início de dietas restritivas, seguidas por episódios em que perde o controle e ingere grande quantidade de alimento em curto período, sentindo-se culpada. Logo após, induz vômitos \"para não engordar\" e para aliviar-se psiquicamente. Está preocupada excessivamente com peso e forma corporal, mantendo peso normal.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro corresponde ao transtorno de compulsão alimentar, pela presença de episódios recorrentes de descontrole alimentar.",
+        "rationale": "Incorreta. O TCA é definido pela AUSÊNCIA de comportamentos compensatórios inadequados regulares; a presença de vômitos autoinduzidos recorrentes afasta esse diagnóstico e aponta para a bulimia nervosa."
+      },
+      {
+        "letter": "B",
+        "text": "O quadro corresponde à anorexia nervosa, subtipo purgativo, já que há indução de vômitos.",
+        "rationale": "Incorreta. A anorexia nervosa exige peso corporal significativamente baixo como critério central; a paciente mantém peso normal, o que é incompatível com esse diagnóstico."
+      },
+      {
+        "letter": "C",
+        "text": "A ausência de baixo peso corporal descarta qualquer transtorno alimentar.",
+        "rationale": "Incorreta. Peso baixo não é exigido para o diagnóstico de bulimia nervosa nem de transtorno de compulsão alimentar, que tipicamente ocorrem com peso normal ou elevado."
+      },
+      {
+        "letter": "D",
+        "text": "O quadro corresponde à bulimia nervosa, pela presença de comportamento compensatório associado à sobrevalorização do peso e da forma corporal.",
+        "rationale": "CORRETA. O quadro reúne os elementos centrais da bulimia nervosa: episódios de compulsão alimentar com perda de controle, comportamento compensatório inadequado recorrente (vômitos autoinduzidos) e sobrevalorização do peso/forma corporal na autoavaliação, mantendo peso dentro da faixa normal."
+      }
+    ],
+    "correctLetter": "D",
+    "clinicalPointers": "Bulimia nervosa: compulsão alimentar + comportamento compensatório inadequado recorrente (vômitos, laxantes, jejum, exercício excessivo) + sobrevalorização do peso/forma corporal, geralmente com peso normal, diferencia-se do TCA justamente pela presença do comportamento compensatório."
+  },
+  {
+    "id": 205,
+    "code": "TA-34",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - Farmacoterapia da bulimia nervosa",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Em relação à farmacoterapia da bulimia nervosa, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A bupropiona é o medicamento com maior respaldo em estudos recentes para o quadro.",
+        "rationale": "Incorreta. A bupropiona é, na verdade, classicamente contraindicada em pacientes com bulimia nervosa (e outros transtornos alimentares com padrão purgativo), pelo maior risco de convulsões associado a esse contexto; não é o medicamento de maior respaldo."
+      },
+      {
+        "letter": "B",
+        "text": "Antidepressivos tricíclicos e IRSN não apresentam eficácia demonstrada.",
+        "rationale": "Incorreta. Antidepressivos tricíclicos e IRSN têm alguma evidência de eficácia na redução de sintomas bulímicos, embora com respaldo inferior ao da fluoxetina, que é o agente com maior evidência e o único aprovado especificamente para o quadro."
+      },
+      {
+        "letter": "C",
+        "text": "A fluoxetina, na dose de 60 mg/dia, é apontada como o principal antidepressivo utilizado, reduzindo episódios bulímicos e vômitos autoinduzidos.",
+        "rationale": "CORRETA. A fluoxetina 60 mg/dia é o agente farmacológico mais estudado e o único aprovado especificamente para bulimia nervosa, reduzindo episódios de compulsão alimentar, vômitos autoinduzidos e sintomas depressivos associados."
+      },
+      {
+        "letter": "D",
+        "text": "O tratamento medicamentoso deve ser mantido por período mínimo de um mês.",
+        "rationale": "Incorreta. O tratamento farmacológico da bulimia nervosa é mantido por período bem mais prolongado do que um mês, geralmente por vários meses, conforme resposta clínica."
+      }
+    ],
+    "correctLetter": "C",
+    "clinicalPointers": "Fluoxetina 60mg/dia é o único ISRS aprovado especificamente para bulimia nervosa. Bupropiona é classicamente contraindicada em transtornos alimentares com padrão purgativo, pelo maior risco de convulsões."
+  },
+  {
+    "id": 206,
+    "code": "TA-35",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - Transtorno de compulsão alimentar: diagnóstico",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Homem de 32 anos, obeso grau II, relata episódios recorrentes em que come grandes quantidades de alimento em pouco tempo, sente-se \"sem controle\", come sozinho por vergonha e sente-se culpado após os episódios. Nega qualquer comportamento de vômito, uso de laxantes ou exercícios compensatórios.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O diagnóstico mais provável é bulimia nervosa, pois há episódios de compulsão alimentar.",
+        "rationale": "Incorreta. A bulimia nervosa exige a presença de comportamentos compensatórios inadequados recorrentes associados à compulsão alimentar, explicitamente negados por este paciente."
+      },
+      {
+        "letter": "B",
+        "text": "A ausência de comportamento compensatório torna o quadro incompatível com qualquer transtorno alimentar.",
+        "rationale": "Incorreta. A ausência de comportamento compensatório não torna o quadro incompatível com qualquer transtorno alimentar; é justamente essa ausência que caracteriza o transtorno de compulsão alimentar."
+      },
+      {
+        "letter": "C",
+        "text": "O diagnóstico exige, obrigatoriamente, sobrevalorização do peso e da forma corporal.",
+        "rationale": "Incorreta. Diferentemente da anorexia e da bulimia nervosas, o transtorno de compulsão alimentar não exige, como critério obrigatório, a sobrevalorização do peso e da forma corporal na autoavaliação."
+      },
+      {
+        "letter": "D",
+        "text": "O diagnóstico mais provável é transtorno de compulsão alimentar, pela ausência de comportamentos compensatórios inadequados associada aos episódios de descontrole.",
+        "rationale": "CORRETA. O quadro apresenta episódios recorrentes de compulsão alimentar com indicadores de perda de controle (comer sozinho por vergonha, sentir-se culpado), na ausência de qualquer comportamento compensatório inadequado, critério que define o TCA e o diferencia da bulimia nervosa."
+      }
+    ],
+    "correctLetter": "D",
+    "clinicalPointers": "TCA: episódios recorrentes de compulsão alimentar com perda de controle, SEM comportamentos compensatórios inadequados regulares, diferencia-se da bulimia justamente pela ausência desse comportamento. Sobrevalorização do peso/forma não é critério obrigatório do TCA."
+  },
+  {
+    "id": 207,
+    "code": "TA-36",
+    "category": "Alimentares",
+    "subcategory": "Prova anterior - TCA: indicadores comportamentais",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Sobre os indicadores comportamentais associados à perda de controle no transtorno de compulsão alimentar, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "É necessário preencher no mínimo três dos cinco indicadores comportamentais (comer rápido, comer até ficar empanturrado, comer sem fome, comer escondido, sentir-se deprimido ou culpado).",
+        "rationale": "CORRETA. O DSM-5 exige que os episódios de compulsão alimentar estejam associados a pelo menos 3 dos 5 indicadores comportamentais listados, como marcadores da perda de controle característica do TCA."
+      },
+      {
+        "letter": "B",
+        "text": "É necessário preencher todos os cinco indicadores listados.",
+        "rationale": "Incorreta. Não é exigido o preenchimento dos cinco indicadores; o critério mínimo é de 3 dos 5 indicadores."
+      },
+      {
+        "letter": "C",
+        "text": "Basta um único indicador comportamental para caracterizar o quadro.",
+        "rationale": "Incorreta. Um único indicador não é suficiente; são exigidos pelo menos 3 dos 5 indicadores comportamentais."
+      },
+      {
+        "letter": "D",
+        "text": "Os indicadores comportamentais não fazem parte da avaliação diagnóstica do transtorno.",
+        "rationale": "Incorreta. Os indicadores comportamentais são parte central dos critérios diagnósticos do TCA, usados para caracterizar a perda de controle durante os episódios."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Critérios do TCA: episódios de compulsão alimentar associados a pelo menos 3 dos 5 indicadores comportamentais (comer rápido, comer até ficar empanturrado, comer sem fome física, comer escondido por vergonha, sentir-se deprimido/culpado depois)."
+  },
+  {
+    "id": 208,
+    "code": "SONO-31",
+    "category": "Sono",
+    "subcategory": "Prova anterior - AOS: exame confirmatório",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Homem de 55 anos, obeso, ronca intensamente durante o sono, apresenta sono agitado e não reparador, com despertares noturnos e queixas de perturbação de memória e concentração. Qual exame permite confirmar o diagnóstico?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Dosagem de hipocretina liquórica.",
+        "rationale": "Incorreta. A dosagem de hipocretina no líquido cerebrospinal é usada na investigação de narcolepsia tipo 1, não para confirmar apneia obstrutiva do sono."
+      },
+      {
+        "letter": "B",
+        "text": "Polissonografia.",
+        "rationale": "CORRETA. A polissonografia é o exame padrão-ouro para confirmação diagnóstica da apneia obstrutiva do sono, definindo também sua gravidade pelo índice de apneia-hipopneia (IAH)."
+      },
+      {
+        "letter": "C",
+        "text": "Exames laboratoriais para investigar condições associadas, como alterações hormonais ou metabólicas.",
+        "rationale": "Incorreta. Exames laboratoriais podem investigar condições associadas ou fatores de risco (como hipotireoidismo), mas não confirmam isoladamente o diagnóstico de AOS."
+      },
+      {
+        "letter": "D",
+        "text": "Tomografia Computadorizada de Via aérea.",
+        "rationale": "Incorreta. A tomografia de via aérea não é o exame confirmatório padrão para AOS; a confirmação diagnóstica é feita pela polissonografia."
+      }
+    ],
+    "correctLetter": "B",
+    "clinicalPointers": "A polissonografia é o exame padrão-ouro para confirmação diagnóstica da AOS, também definindo a gravidade pelo índice de apneia-hipopneia (IAH): leve 5-15, moderada 16-30, grave acima de 30 eventos/hora."
+  },
+  {
+    "id": 209,
+    "code": "SONO-32",
+    "category": "Sono",
+    "subcategory": "Prova anterior - Transtorno de insônia: critérios diagnósticos",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Mulher de 45 anos refere, há cerca de quatro meses, dificuldade para iniciar o sono na maioria das noites, com despertares frequentes ao longo da madrugada, além de acordar mais cedo do que gostaria sem conseguir voltar a dormir. Relata sofrimento importante e queda do rendimento no trabalho. Nega uso de substâncias. O quadro ocorre pelo menos 4 noites por semana.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro não preenche critérios de insônia, pois a frequência mínima exigida é de 5 noites por semana.",
+        "rationale": "Incorreta. A frequência mínima exigida pelo DSM-5-TR é de 3 noites por semana, não 5; a paciente, com 4 noites por semana, já ultrapassa esse limiar."
+      },
+      {
+        "letter": "B",
+        "text": "A duração mínima exigida para o diagnóstico é de 6 meses.",
+        "rationale": "Incorreta. A duração mínima exigida é de 3 meses, não 6; a paciente, com 4 meses de evolução, já preenche esse critério."
+      },
+      {
+        "letter": "C",
+        "text": "O uso de substâncias não precisa ser descartado para o diagnóstico.",
+        "rationale": "Incorreta. O diagnóstico de transtorno de insônia exige que a perturbação não seja mais bem explicada por efeitos fisiológicos de uma substância; investigar e descartar o uso de substâncias é etapa necessária."
+      },
+      {
+        "letter": "D",
+        "text": "O quadro preenche os critérios apresentados para transtorno de insônia, considerando frequência de pelo menos 3 noites por semana durante pelo menos 3 meses, com sofrimento e prejuízo associados.",
+        "rationale": "CORRETA. O DSM-5-TR exige dificuldade de iniciar/manter o sono (ou despertar precoce) por pelo menos 3 noites por semana, durante pelo menos 3 meses, com sofrimento ou prejuízo funcional associado, e oportunidade adequada para dormir, todos preenchidos pela paciente."
+      }
+    ],
+    "correctLetter": "D",
+    "clinicalPointers": "Critérios do transtorno de insônia (DSM-5-TR): dificuldade de iniciar/manter o sono, ou despertar precoce, ≥3 noites/semana, por ≥3 meses, com sofrimento/prejuízo funcional, oportunidade adequada para dormir e sem melhor explicação por substância ou outra condição."
+  },
+  {
+    "id": 210,
+    "code": "SONO-33",
+    "category": "Sono",
+    "subcategory": "Prova anterior - Narcolepsia: quadro clínico",
+    "difficulty": "Avançada",
+    "previousExam": true,
+    "prompt": "Adolescente de 16 anos apresenta episódios súbitos de sonolência incontrolável durante as aulas, relata sonhos muito vívidos ao adormecer, sensação de não conseguir se mover ao despertar e episódios de perda súbita do tônus muscular diante de situações de riso intenso.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro é compatível com apneia obstrutiva do sono, devendo-se indicar CPAP.",
+        "rationale": "Incorreta. O quadro não descreve ronco, pausas respiratórias ou obesidade, e sim a tétrade clássica de narcolepsia (sonolência excessiva, alucinações hipnagógicas, paralisia do sono, cataplexia)."
+      },
+      {
+        "letter": "B",
+        "text": "O quadro é compatível com narcolepsia, associando sonolência excessiva, paralisia do sono e cataplexia, com investigação por polissonografia e dosagem de hipocretina.",
+        "rationale": "CORRETA. O quadro reúne sonolência diurna irreprimível, alucinações hipnagógicas (sonhos vívidos ao adormecer), paralisia do sono e cataplexia (perda súbita do tônus muscular desencadeada por riso), elementos característicos da narcolepsia, cuja investigação inclui polissonografia, teste de latências múltiplas do sono e, quando indicado, dosagem de hipocretina liquórica."
+      },
+      {
+        "letter": "C",
+        "text": "O quadro é compatível com narcolepsia, sendo a paralisia do sono isoladamente suficiente para confirmar o diagnóstico, independentemente de outros exames.",
+        "rationale": "Incorreta. A paralisia do sono isolada não é suficiente para confirmar narcolepsia; o diagnóstico exige a associação de outros critérios clínicos e/ou exames complementares (polissonografia, TLMS, hipocretina)."
+      },
+      {
+        "letter": "D",
+        "text": "O quadro é compatível com transtorno de insônia, dada a sonolência excessiva relatada.",
+        "rationale": "Incorreta. A sonolência excessiva diurna é o oposto do quadro de insônia (dificuldade de iniciar/manter o sono); o quadro descrito é de hipersonolência com cataplexia, característico de narcolepsia."
+      }
+    ],
+    "correctLetter": "B",
+    "clinicalPointers": "Narcolepsia: sonolência diurna irreprimível, associada a cataplexia (perda súbita do tônus muscular por emoção, tipicamente riso), alucinações hipnagógicas/hipnopômpicas e paralisia do sono. Investigação: polissonografia, TLMS (latência ≤8min, ≥2 SOREMP) e, se indicado, hipocretina liquórica."
+  },
+  {
+    "id": 211,
+    "code": "SONO-34",
+    "category": "Sono",
+    "subcategory": "Prova anterior - AOS: conduta diagnóstica e terapêutica",
+    "difficulty": "Avançada",
+    "previousExam": true,
+    "prompt": "Homem de 45 anos, obeso, procura atendimento por sonolência diurna, referindo que a esposa observa ronco alto e pausas respiratórias durante o sono. Relata sono agitado, não reparador, com despertares noturnos frequentes, além de dificuldade de concentração e de memória ao longo do dia. Nega dificuldade para iniciar o sono. Qual a conduta mais adequada nesse caso?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Confirmar o diagnóstico com polissonografia e orientar perda de peso, além de medidas comportamentais como dormir de lado e evitar álcool, relaxante muscular e cigarro antes de dormir.",
+        "rationale": "CORRETA. Diante de quadro clínico sugestivo de apneia obstrutiva do sono, a conduta apropriada é confirmar o diagnóstico por polissonografia e, em conjunto, orientar mudanças de estilo de vida (perda de peso quando há excesso, terapia posicional/dormir de lado) e evitar substâncias que relaxam a via aérea superior (álcool, relaxantes musculares) e o cigarro antes de dormir."
+      },
+      {
+        "letter": "B",
+        "text": "Iniciar diretamente prótese oral, sem necessidade de exame diagnóstico, por ser a medida mais eficaz para o quadro.",
+        "rationale": "Incorreta. A confirmação diagnóstica por polissonografia deve preceder a escolha terapêutica, que não é necessariamente a prótese oral; essa opção não é considerada a mais eficaz de forma isolada, sem exame prévio."
+      },
+      {
+        "letter": "C",
+        "text": "Indicar apenas orientações de higiene do sono, sem necessidade de exame complementar, já que a sonolência diurna isolada já confirma o diagnóstico.",
+        "rationale": "Incorreta. A sonolência diurna isolada não confirma o diagnóstico de AOS; a confirmação exige polissonografia, e o manejo vai além de orientações isoladas de higiene do sono."
+      },
+      {
+        "letter": "D",
+        "text": "Solicitar polissonografia e, independentemente do resultado, iniciar CPAP como única medida terapêutica.",
+        "rationale": "Incorreta. A conduta terapêutica deve depender do resultado e da gravidade encontrados na polissonografia, e não ser definida independentemente dele; além disso, medidas de estilo de vida são recomendadas em conjunto, não isoladamente substituídas pelo CPAP."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Diante de suspeita de AOS: confirmar com polissonografia (padrão-ouro) e associar mudanças de estilo de vida (perda de peso, terapia posicional, evitar álcool/relaxantes musculares/cigarro antes de dormir) às demais opções terapêuticas conforme a gravidade encontrada."
+  },
+  {
+    "id": 212,
+    "code": "DELIRIUM-31",
+    "category": "Delirium",
+    "subcategory": "Prova anterior - Reconhecimento do quadro",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Paciente idoso, internado por infecção urinária, desenvolve subitamente desorientação e dificuldade de manter a atenção durante a entrevista, associadas a alteração do ciclo sono-vigília, com sonolência diurna e agitação noturna. O quadro se instalou em menos de 48 horas.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro descreve delirium, frequentemente associado à perturbação do sono-vigília e à etiologia infecciosa subjacente.",
+        "rationale": "CORRETA. O quadro reúne os elementos centrais do delirium: início agudo (menos de 48 horas), perturbação da atenção e da consciência, e alteração do ciclo sono-vigília (fragmentação do sono, inversão dia-noite), em contexto de infecção urinária, causa etiológica clássica e frequente de delirium, especialmente em idosos."
+      },
+      {
+        "letter": "B",
+        "text": "O quadro corresponde a um transtorno neurocognitivo maior (demência), dado o caráter da instalação.",
+        "rationale": "Incorreta. O caráter agudo da instalação (menos de 48 horas) é incompatível com demência, cujo início é tipicamente lento e insidioso, ao longo de meses a anos."
+      },
+      {
+        "letter": "C",
+        "text": "A duração de instalação exigida para o diagnóstico de delirium é de semanas a meses.",
+        "rationale": "Incorreta. O delirium tem instalação rápida, de horas a poucos dias, e não de semanas a meses, esse padrão mais lento é característico da demência."
+      },
+      {
+        "letter": "D",
+        "text": "A perturbação do sono-vigília não é uma característica associada ao delirium.",
+        "rationale": "Incorreta. A perturbação do ciclo sono-vigília (fragmentação do sono, inversão dia-noite, piora vespertina/noturna) é uma manifestação clínica clássica e frequente do delirium."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Delirium: início agudo (horas a dias), perturbação da atenção/consciência e do ciclo sono-vigília, frequentemente desencadeado por causas infecciosas (como infecção urinária), especialmente em idosos, contrasta com o início insidioso da demência."
+  },
+  {
+    "id": 213,
+    "code": "DELIRIUM-32",
+    "category": "Delirium",
+    "subcategory": "Prova anterior - Critérios diagnósticos",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Considerando os critérios diagnósticos do delirium, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A perturbação da atenção e da consciência deve se desenvolver ao longo de meses, com curso estável ao longo do dia.",
+        "rationale": "Incorreta. A perturbação se desenvolve em período breve (horas a poucos dias) e tende a flutuar em gravidade ao longo do dia, e não se instalar ao longo de meses com curso estável."
+      },
+      {
+        "letter": "B",
+        "text": "A perturbação se desenvolve em período breve (horas a poucos dias), representa mudança em relação à atenção e consciência basais e tende a oscilar em gravidade ao longo do dia.",
+        "rationale": "CORRETA. Esse é exatamente o Critério B do DSM-5-TR para delirium: a perturbação se desenvolve em curto período, representa uma mudança em relação ao nível basal de atenção/consciência do paciente, e tende a flutuar em gravidade ao longo do dia."
+      },
+      {
+        "letter": "C",
+        "text": "O quadro deve ser mais bem explicado por um transtorno neurocognitivo preexistente para que o diagnóstico seja confirmado.",
+        "rationale": "Incorreta. É o oposto: o Critério D exige que as perturbações NÃO sejam mais bem explicadas por outro transtorno neurocognitivo preexistente para que o diagnóstico de delirium seja firmado."
+      },
+      {
+        "letter": "D",
+        "text": "O diagnóstico dispensa a necessidade de evidências de causa fisiológica direta, como condição médica ou uso de substâncias.",
+        "rationale": "Incorreta. O Critério E exige evidências (história, exame físico, achados laboratoriais) de que a perturbação é consequência fisiológica direta de uma condição médica, intoxicação, abstinência de substância ou múltiplas etiologias."
+      }
+    ],
+    "correctLetter": "B",
+    "clinicalPointers": "Critérios do DSM-5-TR para delirium: (A) perturbação da atenção/consciência; (B) desenvolvimento em curto período, com flutuação ao longo do dia; (C) perturbação cognitiva adicional; (D) não mais bem explicado por outro transtorno neurocognitivo nem ocorre em contexto de coma; (E) evidência de causa fisiológica direta."
+  },
+  {
+    "id": 214,
+    "code": "DELIRIUM-33",
+    "category": "Delirium",
+    "subcategory": "Prova anterior - Tratamento sintomático",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Sobre o tratamento sintomático do delirium, além do tratamento da causa de base, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Benzodiazepínicos em altas doses são a primeira escolha para todos os subtipos.",
+        "rationale": "Incorreta. Fora do contexto de abstinência alcoólica ou de sedativo-hipnóticos, os benzodiazepínicos devem ser evitados no delirium, pois podem agravar a confusão mental, não são primeira escolha para todos os subtipos."
+      },
+      {
+        "letter": "B",
+        "text": "Antidepressivos tricíclicos são o tratamento sintomático de escolha.",
+        "rationale": "Incorreta. Antidepressivos tricíclicos não fazem parte do tratamento sintomático padrão do delirium; pelo contrário, seu efeito anticolinérgico pode até contribuir para o quadro."
+      },
+      {
+        "letter": "C",
+        "text": "O tratamento sintomático deve sempre preceder a investigação da causa de base.",
+        "rationale": "Incorreta. O tratamento da causa de base é a prioridade central no manejo do delirium; o tratamento sintomático é complementar, e não deve precedê-lo."
+      },
+      {
+        "letter": "D",
+        "text": "Haloperidol, olanzapina e quetiapina em doses baixas são citados como opções sintomáticas.",
+        "rationale": "CORRETA. O haloperidol em dose baixa é a opção com maior respaldo de evidência para agitação/sintomas psicóticos no delirium; antipsicóticos atípicos como olanzapina, quetiapina e risperidona em doses baixas são citados como alternativas, especialmente em caso de intolerância ao haloperidol."
+      }
+    ],
+    "correctLetter": "D",
+    "clinicalPointers": "Tratamento sintomático do delirium (sempre complementar ao tratamento da causa de base): haloperidol em dose baixa como primeira escolha para agitação/sintomas psicóticos; antipsicóticos atípicos (olanzapina, quetiapina, risperidona) em doses baixas como alternativas. Benzodiazepínicos evitados, exceto em abstinência."
+  },
+  {
+    "id": 215,
+    "code": "ESQ-31",
+    "category": "Esquizofrenia",
+    "subcategory": "Prova anterior - Pródromo e fase ativa",
+    "difficulty": "Avançada",
+    "previousExam": true,
+    "prompt": "Paciente de 23 anos é trazido por apresentar, há cerca de dois meses, discurso desorganizado, comportamento bizarro, delírios persecutórios e alucinações auditivas que comentam seus atos. Antes disso, familiares notaram, ao longo de aproximadamente um ano, retraimento social progressivo e queda do desempenho acadêmico, sem sintomas psicóticos floridos.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O período de retraimento social e queda de desempenho corresponde à fase residual da esquizofrenia.",
+        "rationale": "Incorreta. A fase residual ocorre APÓS a fase ativa, com atenuação dos sintomas psicóticos e predomínio de sintomas negativos; o período descrito, que precede o quadro atual, corresponde à fase prodrômica, não à residual."
+      },
+      {
+        "letter": "B",
+        "text": "Delírios e alucinações são classificados como sintomas negativos.",
+        "rationale": "Incorreta. Delírios e alucinações são sintomas POSITIVOS da esquizofrenia, e não negativos."
+      },
+      {
+        "letter": "C",
+        "text": "O período de retraimento e queda de desempenho corresponde à fase prodrômica, e o quadro atual de delírios e alucinações caracteriza a fase ativa.",
+        "rationale": "CORRETA. O período de aproximadamente um ano com retraimento social progressivo e queda de desempenho, sem sintomas psicóticos floridos, corresponde à fase prodrômica; o quadro atual, com delírios, alucinações e comportamento bizarro, caracteriza a fase ativa da doença."
+      },
+      {
+        "letter": "D",
+        "text": "O diagnóstico de esquizofrenia pode ser firmado independentemente do tempo de duração dos sintomas.",
+        "rationale": "Incorreta. O diagnóstico de esquizofrenia exige critérios temporais específicos: sintomas da fase ativa por pelo menos 1 mês, com sinais contínuos do distúrbio persistindo por pelo menos 6 meses (incluindo pródromo e fase residual), e não pode ser firmado independentemente da duração."
+      }
+    ],
+    "correctLetter": "C",
+    "clinicalPointers": "Curso da esquizofrenia: fase prodrômica (sintomas inespecíficos, retraimento, queda de funcionamento, sem psicose franca) precede a fase ativa (sintomas psicóticos proeminentes: delírios, alucinações, discurso/comportamento desorganizado); a fase residual vem depois, com atenuação dos sintomas positivos."
+  },
+  {
+    "id": 216,
+    "code": "ESQ-32",
+    "category": "Esquizofrenia",
+    "subcategory": "Prova anterior - Sintomas negativos",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Em relação aos sintomas negativos da esquizofrenia, assinale a alternativa correta.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Avolição, anedonia, alogia, associabilidade e achatamento afetivo são classicamente descritos como sintomas negativos.",
+        "rationale": "CORRETA. Esses cinco domínios (avolição, anedonia, alogia, associabilidade e embotamento/achatamento afetivo) compõem o modelo de sintomas negativos da esquizofrenia, sendo a avolição classicamente descrita como o principal preditor de prejuízo funcional entre eles."
+      },
+      {
+        "letter": "B",
+        "text": "Alucinações auditivas e delírios persecutórios são exemplos clássicos de sintomas negativos.",
+        "rationale": "Incorreta. Alucinações e delírios são sintomas POSITIVOS, não negativos."
+      },
+      {
+        "letter": "C",
+        "text": "O comportamento catatônico é classificado exclusivamente como sintoma negativo.",
+        "rationale": "Incorreta. A catatonia não é classificada exclusivamente como sintoma negativo; é um especificador/domínio próprio, que pode incluir tanto características de hiperatividade motora quanto de imobilidade, não se restringindo à categoria de sintomas negativos."
+      },
+      {
+        "letter": "D",
+        "text": "Os sintomas negativos respondem mais efetivamente aos antipsicóticos do que os sintomas positivos.",
+        "rationale": "Incorreta. É o oposto: os sintomas positivos (delírios, alucinações) são os mais efetivamente controlados pelos antipsicóticos, enquanto os sintomas negativos respondem de forma mais limitada a essa classe de medicamentos."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Sintomas negativos da esquizofrenia: avolição, anedonia, alogia, associabilidade e embotamento afetivo; avolição é o principal preditor de prejuízo funcional. Sintomas positivos (delírios, alucinações) respondem melhor aos antipsicóticos do que os negativos."
+  },
+  {
+    "id": 217,
+    "code": "ESQ-33",
+    "category": "Esquizofrenia",
+    "subcategory": "Prova anterior - Subtipo desorganizado/hebefrênico",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Paciente com diagnóstico de esquizofrenia apresenta discurso desorganizado, comportamento desorganizado, afeto inadequado com risos imotivados e grande dificuldade para realizar atividades básicas como tomar banho e se vestir sozinho.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O quadro é compatível com esquizofrenia catatônica.",
+        "rationale": "Incorreta. A apresentação catatônica é caracterizada por alterações psicomotoras marcantes (estupor, flexibilidade cérea, mutismo, negativismo), e não pelo padrão de discurso/comportamento desorganizado com afeto inadequado descrito no caso."
+      },
+      {
+        "letter": "B",
+        "text": "O quadro é compatível com esquizofrenia hebefrênica/desorganizada.",
+        "rationale": "CORRETA. O padrão descrito (discurso e comportamento desorganizados, afeto inadequado com risos imotivados, e prejuízo grave em atividades básicas de autocuidado) é característico do subtipo hebefrênico/desorganizado."
+      },
+      {
+        "letter": "C",
+        "text": "O quadro é compatível com esquizofrenia paranoide.",
+        "rationale": "Incorreta. O subtipo paranoide é dominado por delírios e/ou alucinações proeminentes, geralmente sem desorganização importante do discurso, do comportamento ou do afeto, diferente do quadro descrito."
+      },
+      {
+        "letter": "D",
+        "text": "O quadro é compatível com esquizofrenia indiferenciada.",
+        "rationale": "Incorreta. A apresentação indiferenciada é usada quando o quadro não se encaixa claramente em nenhum subtipo específico; aqui, o padrão de desorganização e afeto inadequado se encaixa claramente no subtipo hebefrênico/desorganizado."
+      }
+    ],
+    "correctLetter": "B",
+    "clinicalPointers": "Subtipo hebefrênico/desorganizado: discurso e comportamento desorganizados, afeto inadequado (incluindo risos imotivados) e prejuízo funcional importante em atividades básicas de autocuidado, diferente do subtipo catatônico (alterações psicomotoras) e do paranoide (delírios/alucinações dominantes)."
+  },
+  {
+    "id": 218,
+    "code": "ESQ-34",
+    "category": "Esquizofrenia",
+    "subcategory": "Prova anterior - Epidemiologia: idade de início por sexo",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Um homem de 20 anos e uma mulher de 26 anos são diagnosticados com esquizofrenia no mesmo mês, ambos em seu primeiro episódio psicótico, sem uso prévio de substâncias e sem outras comorbidades relatadas. Assinale a alternativa correta:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A idade de início observada em ambos os pacientes está de acordo com o padrão epidemiológico apresentado, no qual a idade média de início é mais precoce em homens do que em mulheres.",
+        "rationale": "CORRETA. O padrão epidemiológico da esquizofrenia mostra início tipicamente mais precoce em homens (por volta do início da idade adulta, cerca de 21 anos) do que em mulheres (com pico um pouco mais tardio, além de um segundo pico por volta dos 40 anos), compatível com as idades de 20 e 26 anos observadas."
+      },
+      {
+        "letter": "B",
+        "text": "A apresentação é atípica, pois a esquizofrenia acomete predominantemente mulheres, com início mais precoce nesse sexo.",
+        "rationale": "Incorreta. A esquizofrenia não acomete predominantemente mulheres; a prevalência é semelhante entre os sexos, com diferença relevante apenas na idade de início, mais precoce em homens."
+      },
+      {
+        "letter": "C",
+        "text": "A idade de início em ambos os casos é incompatível com o diagnóstico de esquizofrenia, que tipicamente se manifesta apenas após os 40 anos.",
+        "rationale": "Incorreta. As idades descritas (20 e 26 anos) são justamente as mais típicas para o início da esquizofrenia; o início após os 40 anos é considerado atípico (esquizofrenia de início tardio), não a regra."
+      },
+      {
+        "letter": "D",
+        "text": "Por terem idades de início diferentes, apenas um dos dois pacientes pode efetivamente ter o diagnóstico confirmado de esquizofrenia.",
+        "rationale": "Incorreta. A diferença de idade de início entre pacientes distintos não invalida o diagnóstico de nenhum deles; ambas as idades são compatíveis com o padrão epidemiológico esperado para cada sexo."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "Epidemiologia da esquizofrenia: início tipicamente mais precoce em homens (por volta dos 21 anos) do que em mulheres (pico um pouco mais tardio, com segundo pico por volta dos 40 anos); prevalência geral semelhante entre os sexos."
+  },
+  {
+    "id": 219,
+    "code": "INTRO-22",
+    "category": "Introducao",
+    "subcategory": "Prova anterior - Exame do Estado Mental: Orientação",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Durante a entrevista psiquiátrica, o examinador avalia se o paciente sabe em que dia, mês e ano se encontra, além de reconhecer o local em que está e identificar corretamente as pessoas ao seu redor. Qual elemento do exame psíquico este corresponde?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Atenção.",
+        "rationale": "Incorreta. A atenção refere-se à capacidade de direcionar, manter e mudar o foco durante a entrevista, e não ao reconhecimento de tempo, espaço e pessoa."
+      },
+      {
+        "letter": "B",
+        "text": "Consciência.",
+        "rationale": "Incorreta. A consciência refere-se ao nível geral de alerta e resposta a estímulos, e não especificamente ao reconhecimento de tempo, lugar e pessoas."
+      },
+      {
+        "letter": "C",
+        "text": "Orientação.",
+        "rationale": "CORRETA. A orientação avalia se o paciente sabe em que tempo (dia, mês, ano), espaço (local) e pessoa (reconhecimento de si e dos outros) se encontra, exatamente os elementos descritos."
+      },
+      {
+        "letter": "D",
+        "text": "Insight/autopatognose.",
+        "rationale": "Incorreta. Insight refere-se à consciência do paciente sobre seu próprio adoecimento, não ao reconhecimento de tempo, espaço e pessoa."
+      }
+    ],
+    "correctLetter": "C",
+    "clinicalPointers": "Orientação (domínio da Cognição, no Exame do Estado Mental): avalia se o paciente sabe em que tempo, espaço e pessoa se encontra, geralmente testada perguntando data, local e reconhecimento das pessoas ao redor."
+  },
+  {
+    "id": 220,
+    "code": "INTRO-23",
+    "category": "Introducao",
+    "subcategory": "Prova anterior - Exame do Estado Mental: Atenção",
+    "difficulty": "Intermediária",
+    "previousExam": true,
+    "prompt": "Durante a entrevista, o paciente descreve corretamente onde está e reconhece as pessoas ao seu redor, mas não consegue sustentar o foco na conversa, dispersando-se a cada estímulo externo e perdendo o fio da pergunta feita.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Orientação.",
+        "rationale": "Incorreta. A orientação (tempo, espaço, pessoa) está preservada no caso descrito, já que o paciente reconhece corretamente onde está e quem está ao seu redor; o problema descrito é outro."
+      },
+      {
+        "letter": "B",
+        "text": "Atenção.",
+        "rationale": "CORRETA. A dificuldade em sustentar o foco na conversa, com dispersão a cada estímulo externo e perda do fio da pergunta, é a descrição clássica de um déficit de atenção, mesmo com a orientação preservada."
+      },
+      {
+        "letter": "C",
+        "text": "Consciência do eu.",
+        "rationale": "Incorreta. A consciência do eu (despersonalização/desrealização) não é o que está sendo descrito; o caso descreve um déficit de sustentação do foco atencional."
+      },
+      {
+        "letter": "D",
+        "text": "Inteligência.",
+        "rationale": "Incorreta. Inteligência não é um domínio avaliado dessa forma no Exame do Estado Mental; o achado descrito é especificamente de atenção."
+      }
+    ],
+    "correctLetter": "B",
+    "clinicalPointers": "Atenção (Exame do Estado Mental): capacidade de direcionar, focalizar, manter e mudar o foco. Pode estar alterada mesmo com orientação preservada, como no caso descrito (paciente orientado, mas incapaz de sustentar o foco na conversa)."
+  },
+  {
+    "id": 221,
+    "code": "INTRO-24",
+    "category": "Introducao",
+    "subcategory": "Prova anterior - Anamnese x Exame Psíquico",
+    "difficulty": "Avançada",
+    "previousExam": true,
+    "prompt": "Durante o atendimento a um paciente em primeira consulta psiquiátrica, o médico generalista deve estruturar sua avaliação em etapas específicas. Considerando a anamnese psiquiátrica e o exame psíquico conforme apresentados, assinale a alternativa que contém, respectivamente, um item pertencente à anamnese e um item pertencente ao exame psíquico.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Queixa principal; capacidade de recordar eventos passados (memória).",
+        "rationale": "CORRETA. A queixa principal é um item da anamnese (reunido a partir do relato do paciente sobre sua história); a capacidade de recordar eventos passados (memória) é um item do exame psíquico, avaliado dentro do domínio da cognição, descrito objetivamente pelo examinador."
+      },
+      {
+        "letter": "B",
+        "text": "Motivação e impulso para iniciar tarefas (conação); queixa principal.",
+        "rationale": "Incorreta. A ordem está invertida em relação ao que foi pedido: motivação/impulso para iniciar tarefas (conação) é um item do exame psíquico, e queixa principal é um item da anamnese, o oposto da sequência anamnese/exame psíquico solicitada."
+      },
+      {
+        "letter": "C",
+        "text": "Amplitude e adequação das emoções (afetividade); vestuário e higiene (aparência).",
+        "rationale": "Incorreta. Tanto a afetividade quanto a aparência são itens do exame psíquico (observados objetivamente pelo examinador); nenhum dos dois pertence à anamnese."
+      },
+      {
+        "letter": "D",
+        "text": "Entendimento do paciente sobre sua condição (insight); tempo de evolução dos sintomas.",
+        "rationale": "Incorreta. A ordem está invertida: insight é um item do exame psíquico, e o tempo de evolução dos sintomas (parte da história da doença atual) é um item da anamnese, o oposto da sequência anamnese/exame psíquico solicitada."
+      }
+    ],
+    "correctLetter": "A",
+    "clinicalPointers": "A anamnese reúne o que o paciente relata (queixa principal, história da doença atual, antecedentes); o exame psíquico descreve o que o examinador observa objetivamente durante a entrevista (aparência, afetividade, cognição/memória, insight, entre outros domínios)."
   }
 ];
 
@@ -7186,6 +7849,7 @@
     const questionPillPalette = document.getElementById('questionPillPalette');
     const badgeTheme = document.getElementById('badgeTheme');
     const badgeDifficulty = document.getElementById('badgeDifficulty');
+    const badgePreviousExam = document.getElementById('badgePreviousExam');
     const questionCode = document.getElementById('questionCode');
     const questionPrompt = document.getElementById('questionPrompt');
     const hintBox = document.getElementById('hintBox');
@@ -7492,6 +8156,7 @@
       const catLabel = CATEGORY_LABELS[q.category] || q.category;
       badgeTheme.textContent = `${catLabel.toUpperCase()} - ${q.subcategory}`;
       badgeDifficulty.textContent = q.difficulty;
+      badgePreviousExam.classList.toggle('hidden', !q.previousExam);
       questionCode.textContent = q.code;
       questionPrompt.textContent = q.prompt;
       hintBox.classList.add('hidden');
@@ -7953,6 +8618,7 @@
               ⏱️ ${timeLabel}${wasSlow ? ' <span class="text-amber-600 font-bold not-italic">• demorou mais que a media</span>' : ''}
             </span>
             <span class="text-xs text-slate-500 font-medium">${catLabel.toUpperCase()} - ${q.subcategory}</span>
+            ${q.previousExam ? '<span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-200">🕰️ Prova Anterior</span>' : ''}
           </div>
 
           <p class="text-slate-800 font-medium text-sm sm:text-base mb-4 leading-relaxed">${q.prompt}</p>

@@ -7655,6 +7655,11 @@
       if (currentQuestions.length === 0 || isQuizSubmitted) return;
       const data = {
         questionIds: currentQuestions.map(q => q.id),
+        optionsSnapshot: currentQuestions.map(q => ({
+          id: q.id,
+          options: q.options,
+          correctLetter: q.correctLetter
+        })),
         currentIndex,
         userAnswers,
         flaggedQuestions: [...flaggedQuestions],
@@ -7964,6 +7969,28 @@
       return arr;
     }
 
+    const OPTION_LETTERS = ['A', 'B', 'C', 'D'];
+
+    // Embaralha a ordem das alternativas de uma questão e reatribui as letras
+    // A/B/C/D de acordo com a nova posição, para que a letra correta não
+    // fique sempre a mesma entre tentativas nem entre pessoas diferentes.
+    function shuffleQuestionOptions(q) {
+      const shuffledOptions = shuffleArray(q.options, Math.random);
+      let newCorrectLetter = q.correctLetter;
+      const relabeled = shuffledOptions.map((opt, idx) => {
+        const newLetter = OPTION_LETTERS[idx];
+        if (opt.letter === q.correctLetter) {
+          newCorrectLetter = newLetter;
+        }
+        return { ...opt, letter: newLetter };
+      });
+      return { ...q, options: relabeled, correctLetter: newCorrectLetter };
+    }
+
+    function shuffleQuestionsOptions(questions) {
+      return questions.map(shuffleQuestionOptions);
+    }
+
     function pickBalancedQuestions(pool, count, random, avoidRepeats) {
       const rng = random || Math.random;
       const seenIds = avoidRepeats ? loadSeenQuestionIds() : new Set();
@@ -8085,7 +8112,7 @@
       const count = Math.min(Math.max(Number.isFinite(requested) ? requested : pool.length, minCount), pool.length);
       const sessionCode = sessionCodeInput.value.trim();
       const rng = sessionCode ? createSeededRandom(sessionCode) : Math.random;
-      beginQuiz(pickBalancedQuestions(pool, count, rng, !sessionCode));
+      beginQuiz(shuffleQuestionsOptions(pickBalancedQuestions(pool, count, rng, !sessionCode)));
     });
 
     function renderPalette() {
@@ -8671,7 +8698,7 @@
       const count = Math.min(Math.max(Number.isFinite(requested) ? requested : max, 1), max);
       document.getElementById('quantityModal').classList.add('hidden');
       if (quantityModalBuilder) {
-        beginQuiz(quantityModalBuilder(count));
+        beginQuiz(shuffleQuestionsOptions(quantityModalBuilder(count)));
       }
       quantityModalBuilder = null;
     });
@@ -8934,7 +8961,16 @@
     document.getElementById('btnResumeQuiz').addEventListener('click', () => {
       const saved = loadSavedProgress();
       if (!saved) return;
-      const questions = saved.questionIds.map(id => QUESTIONS_DATABASE.find(q => q.id === id)).filter(Boolean);
+      const snapshotById = new Map((saved.optionsSnapshot || []).map(s => [s.id, s]));
+      const questions = saved.questionIds.map(id => {
+        const base = QUESTIONS_DATABASE.find(q => q.id === id);
+        if (!base) return null;
+        const snap = snapshotById.get(id);
+        // Preserva o embaralhamento de alternativas já em curso; sem
+        // snapshot (progresso salvo antes desta função existir), gera um
+        // novo embaralhamento para essa retomada.
+        return snap ? { ...base, options: snap.options, correctLetter: snap.correctLetter } : shuffleQuestionOptions(base);
+      }).filter(Boolean);
       if (questions.length === 0) {
         clearSavedProgress();
         document.getElementById('resumeBanner').classList.add('hidden');

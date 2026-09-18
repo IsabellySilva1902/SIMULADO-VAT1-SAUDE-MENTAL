@@ -7774,7 +7774,7 @@
       const total = QUESTIONS_DATABASE.length;
       const overallPct = Math.round((totalSeen / total) * 100);
       document.getElementById('coverageOverallPct').textContent = `${totalSeen}/${total} (${overallPct}%)`;
-      document.getElementById('coverageOverallBar').style.width = `${overallPct}%`;
+      document.getElementById('coverageOverallBar').style.width = `${totalSeen > 0 ? Math.max(overallPct, 2) : 0}%`;
 
       const byCategoryContainer = document.getElementById('coverageByCategory');
       byCategoryContainer.innerHTML = '';
@@ -7784,6 +7784,7 @@
         const catQuestions = QUESTIONS_DATABASE.filter(q => q.category === cat);
         const catSeen = catQuestions.filter(q => seenIds.has(q.id)).length;
         const pct = Math.round((catSeen / catQuestions.length) * 100);
+        const barWidth = catSeen > 0 ? Math.max(pct, 4) : 0;
         const label = CATEGORY_LABELS[cat] || cat;
 
         const row = document.createElement('div');
@@ -7791,7 +7792,7 @@
         row.innerHTML = `
           <span class="text-xs text-slate-600 w-28 flex-shrink-0 truncate" title="${label}">${label}</span>
           <div class="flex-1 min-w-0 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-            <div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-500' : 'bg-indigoBrand-400'}" style="width:${pct}%"></div>
+            <div class="h-full rounded-full ${pct >= 100 ? 'bg-emerald-500' : 'bg-indigoBrand-400'}" style="width:${barWidth}%"></div>
           </div>
           <span class="text-xs text-slate-500 w-10 text-right flex-shrink-0">${catSeen}/${catQuestions.length}</span>
         `;
